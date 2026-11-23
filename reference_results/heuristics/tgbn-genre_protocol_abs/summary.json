@@ -1,0 +1,164 @@
+{
+  "source": "converted from logs/genre_strict_protocol_delay7.log (4-decimal precision)",
+  "args": {
+    "name": "tgbn-genre",
+    "weight": "abs"
+  },
+  "cutoff": "protocol",
+  "meta": {
+    "label_delay": 0.0
+  },
+  "test_mean": {
+    "real": {
+      "Fit-Time": 0.5418,
+      "Fit-NoTime": 0.5408,
+      "Blend3": 0.539,
+      "Blend2": 0.5368,
+      "Fit-LabelOnly": 0.5322,
+      "Fit-EdgeOnly": 0.5262,
+      "PF": 0.3567,
+      "EMA0.5": 0.4657,
+      "EMA0.7": 0.4891,
+      "EMA0.833333": 0.509,
+      "EMA0.95": 0.5295,
+      "CNT": 0.3244,
+      "CUM": 0.5029,
+      "PCEMA0.5": 0.4576,
+      "PCEMA0.857143": 0.5017,
+      "DEC0.125P": 0.4044,
+      "DEC0.5P": 0.4311,
+      "DEC2P": 0.4722,
+      "DEC8P": 0.5092,
+      "MA": 0.509
+    },
+    "placebo": {
+      "Fit-Time": 0.5414,
+      "Fit-NoTime": 0.5406,
+      "Blend3": 0.5392,
+      "Blend2": 0.5369,
+      "Fit-LabelOnly": 0.5322,
+      "Fit-EdgeOnly": 0.5256,
+      "PF": 0.3567,
+      "EMA0.5": 0.4657,
+      "EMA0.7": 0.4891,
+      "EMA0.833333": 0.509,
+      "EMA0.95": 0.5295,
+      "CNT": 0.3305,
+      "CUM": 0.503,
+      "PCEMA0.5": 0.4558,
+      "PCEMA0.857143": 0.4986,
+      "DEC0.125P": 0.3981,
+      "DEC0.5P": 0.4294,
+      "DEC2P": 0.4722,
+      "DEC8P": 0.5094,
+      "MA": 0.509
+    }
+  },
+  "val_mean": {
+    "real": {
+      "PF": 0.3497,
+      "EMA0.5": 0.4571,
+      "EMA0.7": 0.4795,
+      "EMA0.833333": 0.4988,
+      "EMA0.95": 0.5188,
+      "CNT": 0.317,
+      "CUM": 0.4998,
+      "PCEMA0.5": 0.4515,
+      "PCEMA0.857143": 0.4925,
+      "DEC0.125P": 0.3967,
+      "DEC0.5P": 0.4233,
+      "DEC2P": 0.4652,
+      "DEC8P": 0.5012,
+      "MA": 0.4988
+    }
+  },
+  "comparisons": {
+    "real: Fit-LabelOnly vs Fit-EdgeOnly": {
+      "mean_diff": 0.0059,
+      "ci95": [
+        0.0038,
+        0.0081
+      ],
+      "win_rate": 0.64,
+      "wilcoxon_p": 1.25e-06,
+      "n": 166
+    },
+    "real: Fit-Time vs Fit-NoTime": {
+      "mean_diff": 0.0009,
+      "ci95": [
+        0.0004,
+        0.0015
+      ],
+      "win_rate": 0.62,
+      "wilcoxon_p": 0.00229,
+      "n": 166
+    },
+    "real: Blend3 vs Blend2": {
+      "mean_diff": 0.0022,
+      "ci95": [
+        0.0012,
+        0.0032
+      ],
+      "win_rate": 0.69,
+      "wilcoxon_p": 1.73e-06,
+      "n": 166
+    },
+    "real: best DEC single (DEC8P) vs best no-timing single (EMA0.95)": {
+      "mean_diff": -0.0203,
+      "ci95": [
+        -0.0225,
+        -0.0184
+      ],
+      "win_rate": 0.05,
+      "wilcoxon_p": 3.54e-27,
+      "n": 166
+    },
+    "placebo: Fit-Time vs Fit-NoTime": {
+      "mean_diff": 0.0008,
+      "ci95": [
+        0.0,
+        0.0014
+      ],
+      "win_rate": 0.66,
+      "wilcoxon_p": 0.00213,
+      "n": 166
+    },
+    "Fit-Time: real vs placebo": {
+      "mean_diff": 0.0004,
+      "ci95": [
+        -0.0002,
+        0.0009
+      ],
+      "win_rate": 0.59,
+      "wilcoxon_p": 0.0683,
+      "n": 166
+    },
+    "Fit-NoTime: real vs placebo (sanity, should be ~0)": {
+      "mean_diff": 0.0002,
+      "ci95": [
+        -0.0005,
+        0.0008
+      ],
+      "win_rate": 0.6,
+      "wilcoxon_p": 0.0465,
+      "n": 166
+    },
+    "timing gain: real minus placebo (difference-in-differences)": {
+      "mean_diff": 0.0002,
+      "ci95": [
+        -0.0006,
+        0.0011
+      ],
+      "win_rate": 0.49,
+      "wilcoxon_p": 0.733,
+      "n": 166
+    }
+  },
+  "diagnostics": {
+    "real": {
+      "leak_mean_edges": 101.8,
+      "max_now_minus_lt": 64743.0
+    }
+  },
+  "ma_key": "EMA0.833333"
+}

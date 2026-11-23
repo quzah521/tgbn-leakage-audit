@@ -1,0 +1,76 @@
+{
+  "source": "converted from logs/trade_strict_protocol.log (4-decimal precision; pre-release code version); EMA0.95 and Fit-LabelOnly test values at full precision",
+  "args": {
+    "name": "tgbn-trade",
+    "weight": "abs"
+  },
+  "cutoff": "strict",
+  "meta": {
+    "label_delay": 0.0
+  },
+  "test_mean": {
+    "real": {
+      "Fit-Time": 0.8629,
+      "Fit-NoTime": 0.8629,
+      "Blend3": 0.8608,
+      "Blend2": 0.86,
+      "Fit-LabelOnly": 0.8575424428014516,
+      "Fit-EdgeOnly": 0.8631,
+      "PF": 0.8547,
+      "EMA0.5": 0.8575,
+      "EMA0.7": 0.8468,
+      "EMA0.857143": 0.8226,
+      "EMA0.95": 0.7254749992481783,
+      "CNT": 0.8547,
+      "CUM": 0.7356,
+      "PCEMA0.5": 0.8161,
+      "PCEMA0.857143": 0.7935,
+      "DEC0.125P": 0.8585,
+      "DEC0.5P": 0.8611,
+      "DEC2P": 0.8537,
+      "DEC8P": 0.8182
+    }
+  },
+  "comparisons": {
+    "real: Fit-LabelOnly vs Fit-EdgeOnly": {
+      "mean_diff": -0.0056,
+      "ci95": [
+        -0.0091,
+        -0.0033
+      ],
+      "win_rate": 0.0,
+      "wilcoxon_p": NaN,
+      "n": 3
+    },
+    "real: Fit-Time vs Fit-NoTime": {
+      "mean_diff": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "win_rate": 0.0,
+      "wilcoxon_p": NaN,
+      "n": 3
+    },
+    "real: Blend3 vs Blend2": {
+      "mean_diff": 0.0008,
+      "ci95": [
+        -0.0002,
+        0.0014
+      ],
+      "win_rate": 0.67,
+      "wilcoxon_p": NaN,
+      "n": 3
+    },
+    "real: best DEC single (DEC2P) vs best no-timing single (EMA0.5)": {
+      "mean_diff": -0.0039,
+      "ci95": [
+        -0.0052,
+        -0.0031
+      ],
+      "win_rate": 0.0,
+      "wilcoxon_p": NaN,
+      "n": 3
+    }
+  }
+}

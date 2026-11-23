@@ -1,0 +1,102 @@
+{
+  "source": "converted from logs/genre_delay_5_6.log (4-decimal precision)",
+  "args": {
+    "name": "tgbn-genre",
+    "weight": "abs"
+  },
+  "cutoff": "strict",
+  "meta": {
+    "label_delay": 6.0
+  },
+  "test_mean": {
+    "real": {
+      "Fit-Time": 0.5297,
+      "Fit-NoTime": 0.5283,
+      "Blend3": 0.5298,
+      "Blend2": 0.5248,
+      "Fit-LabelOnly": 0.5126,
+      "Fit-EdgeOnly": 0.5273,
+      "PF": 0.3162,
+      "EMA0.5": 0.4276,
+      "EMA0.7": 0.4537,
+      "EMA0.833333": 0.4791,
+      "EMA0.95": 0.5126,
+      "CNT": 0.3246,
+      "CUM": 0.503,
+      "PCEMA0.5": 0.4577,
+      "PCEMA0.857143": 0.5015,
+      "DEC0.125P": 0.4042,
+      "DEC0.5P": 0.4311,
+      "DEC2P": 0.4721,
+      "DEC8P": 0.5091,
+      "MA": 0.4791
+    }
+  },
+  "val_mean": {
+    "real": {
+      "PF": 0.3081,
+      "EMA0.5": 0.4182,
+      "EMA0.7": 0.4443,
+      "EMA0.833333": 0.4693,
+      "EMA0.95": 0.5006,
+      "CNT": 0.317,
+      "CUM": 0.4998,
+      "PCEMA0.5": 0.4516,
+      "PCEMA0.857143": 0.4925,
+      "DEC0.125P": 0.3969,
+      "DEC0.5P": 0.4235,
+      "DEC2P": 0.4652,
+      "DEC8P": 0.5011,
+      "MA": 0.4693
+    }
+  },
+  "comparisons": {
+    "real: Fit-LabelOnly vs Fit-EdgeOnly": {
+      "mean_diff": -0.0147,
+      "ci95": [
+        -0.0166,
+        -0.0127
+      ],
+      "win_rate": 0.1,
+      "wilcoxon_p": 4.79e-22,
+      "n": 166
+    },
+    "real: Fit-Time vs Fit-NoTime": {
+      "mean_diff": 0.0014,
+      "ci95": [
+        0.0006,
+        0.0022
+      ],
+      "win_rate": 0.64,
+      "wilcoxon_p": 4.66e-05,
+      "n": 166
+    },
+    "real: Blend3 vs Blend2": {
+      "mean_diff": 0.005,
+      "ci95": [
+        0.004,
+        0.0059
+      ],
+      "win_rate": 0.83,
+      "wilcoxon_p": 7.56e-18,
+      "n": 166
+    },
+    "real: best DEC single (DEC8P) vs best no-timing single (EMA0.95)": {
+      "mean_diff": -0.0035,
+      "ci95": [
+        -0.0059,
+        -0.0014
+      ],
+      "win_rate": 0.43,
+      "wilcoxon_p": 0.0168,
+      "n": 166
+    }
+  },
+  "diagnostics": {
+    "real": {
+      "leak_mean_edges": 0.0,
+      "max_now_minus_lt": -55.0
+    }
+  },
+  "ma_key": "EMA0.833333"
+}

@@ -1,0 +1,17 @@
+# Replay of the crashed loss step with debug_repro.py (saved inputs of the step above).
+$ python debug_repro.py debug_failing_batch.pt
+[repro] torch=2.10.0+cu128 cuda=12.8 (run used torch=2.10.0+cu128 cuda=12.8)
+[repro] crashed stage=regularization epoch=1 label_t=1275177604
+[repro] full-width inputs
+  preds: shape=(6890, 698) dtype=torch.float32 finite=True min=0.0 max=0.9999973773956299
+  labels: shape=(6890, 698) dtype=torch.float32 finite=True min=0.0 max=1.0
+  rows with all-zero labels=0, rows whose preds are all equal=19, nonzero labels per row: min=1 max=52
+[repro] after gather: U=40 columns, binary_path=False, n: min=1 max=20, rows with n=0: 0
+[repro] CPU: OK (lambda=0.2073, reg=0.3109)
+[repro] GPU uses the gathered tensors saved at crash time
+[repro] GPU index ranges
+  reg pred_top (topk scores): min=0 max=39 allowed=[0,39]  OK
+  reg true_top (topk masked): min=0 max=39 allowed=[0,39]  OK
+  lambda ranking (argsort scores): min=0 max=39 allowed=[0,39]  OK
+  lambda max_dcg ranking (argsort labels): min=0 max=39 allowed=[0,39]  OK
+[repro] GPU: running the real loss 50 times with CUDA_LAUNCH_BLOCKING=1 ...

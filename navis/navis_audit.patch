@@ -1,0 +1,309 @@
+--- navis.py
++++ navis_audit.py
+@@ -1,4 +1,5 @@
+ import timeit
++import time
+ import numpy as np
+ import torch.nn as nn
+ import torch
+@@ -11,7 +12,10 @@
+ import argparse
+ import matplotlib.pyplot as plt
+ from regularization import HindgeRegularization
+-from pytorchltr.pytorchltr.loss.pairwise_lambda import LambdaNDCGLoss2
++try:  # vendored copy (pytorchltr, MIT) with NAVIS's clamp fix; no pytorchltr install needed
++    from ltr_loss import LambdaNDCGLoss2
++except ImportError:
++    from pytorchltr.pytorchltr.loss.pairwise_lambda import LambdaNDCGLoss2
+ 
+ from torch_geometric.loader import TemporalDataLoader
+ from tgb.nodeproppred.dataset_pyg import PyGNodePropPredDataset
+@@ -63,6 +67,17 @@
+         self.node_prev_label = torch.zeros((num_nodes, num_class), device=device).float()
+         self.lstm = SimpleRNNCell(input_size=num_classes, hidden_size=num_classes, bias=False)
+         self.prev_global_label = torch.zeros((1, num_class), device=device).float()
++        self.global_ref = torch.zeros((1, num_class), device=device).float()
++        self.pending = []          # (release_time, label_time, node_ids, labels)
++        self.current_t = -float("inf")
++
++    def release(self, t: float):
++        """Called before predicting label time t: make released labels usable."""
++        self.current_t = float(t)
++        while self.pending and self.pending[0][1] < self.current_t and self.pending[0][0] <= self.current_t:
++            _, _, nids, labs = self.pending.pop(0)
++            self.node_prev_label[nids] = labs
++            self.global_ref = labs.mean(dim=0, keepdim=True)
+ 
+     def get_memory_and_update(self, node_ids: np.array, labels: np.array):
+         """
+@@ -79,12 +94,21 @@
+             pred, state = self.lstm(self.node_history[node_ids].clone(),labels,labels)
+             self.node_history[node_ids] = state
+         else:
+-            gs = labels.to(device).clone()[0:labels.shape[0] - 1]
+-            gs = torch.cat([self.prev_global_label, gs], dim=0)
+-            self.prev_global_label = labels[labels.shape[0] - 1].reshape(1, -1).to(device)
++            n = labels.shape[0]
++            if GLOBAL_STATE == "leaky":  # original NAVIS: current labels of other nodes
++                gs = labels.to(device).clone()[0:n - 1]
++                gs = torch.cat([self.prev_global_label, gs], dim=0)
++                self.prev_global_label = labels[n - 1].reshape(1, -1).to(device)
++            elif GLOBAL_STATE == "prev":
++                gs = self.global_ref.expand(n, -1)
++            else:
++                gs = torch.zeros((n, self.num_class), device=device)
+ 
+             pred, state = self.lstm(self.node_history[node_ids].clone(), self.node_prev_label[node_ids].clone(), gs)
+-            self.node_prev_label[node_ids] = labels
++            if LABEL_DELAY <= 0:
++                self.node_prev_label[node_ids] = labels  # original behavior
++            self.pending.append((self.current_t + LABEL_DELAY, self.current_t,
++                                 node_ids.detach().clone(), labels.detach().clone().to(device)))
+             self.node_history[node_ids] = state
+ 
+         return pred
+@@ -112,16 +136,39 @@
+         self.node_prev_label = torch.zeros((self.num_nodes, self.num_class), device=device).float()
+         self.semi_labels = torch.zeros((self.num_nodes, self.num_class), device=device).float()
+         self.prev_global_label = torch.zeros((1, self.num_class), device=device).float()
++        self.global_ref = torch.zeros((1, self.num_class), device=device).float()
++        self.pending = []
++        self.current_t = -float("inf")
+ 
+ 
+ parser = argparse.ArgumentParser(description='parsing command line arguments as hyperparameters')
+-parser.add_argument('-s', '--seed', type=int, default=1,
+-                    help='random seed to use')
++parser.add_argument('-s', '--seed', type=int, default=2,
++                    help='random seed to use (original script forces 2)')
++parser.add_argument('--name', default='tgbn-trade')
++parser.add_argument('--epochs', type=int, default=50)
++parser.add_argument('--multi', action='store_true', help='IS_MULTI=True: semi-labels from edges')
++parser.add_argument('--global_state', default='leaky', choices=['leaky', 'prev', 'none'],
++                    help="leaky = original (g_i = CURRENT ground-truth label of node i-1); "
++                         "prev = mean of the most recently released labels; none = zeros")
++parser.add_argument('--label_delay', type=float, default=0.0,
++                    help='labels revealed at L are usable from L + delay*P (P = median label interval)')
++parser.add_argument('--cutoff', default='protocol', choices=['protocol', 'strict'],
++                    help='strict: only edges with t < L_i are processed before predicting L_i')
++parser.add_argument('--edge_weight', default='abs', choices=['abs', 'one'],
++                    help="multi mode semi-label weight: abs = |msg[:,0]| (original), one = count edges")
++parser.add_argument('--reg_device', default='cuda', choices=['cuda', 'cpu'],
++                    help="where NAVIS's HindgeRegularization is computed (cpu = same math, avoids a GPU-side assert "
++                         "seen on tgbn-reddit with torch 2.10; gradients still flow back to the GPU model)")
++parser.add_argument('--lr', type=float, default=0.0001, help='learning rate (original: 1e-4)')
++parser.add_argument('--delta', type=float, default=0.001,
++                    help='margin DELTA of the hinge regularizer (original: 1e-3)')
++parser.add_argument('--patience', type=int, default=0,
++                    help='stop if val NDCG has not improved for this many epochs (0 = off, original behavior)')
++parser.add_argument('--out', default='navis_audit_results.jsonl')
+ parser.parse_args()
+ args = parser.parse_args()
+ # setting random seed
+ seed = int(args.seed)  # 1,2,3,4,5
+-seed = 2
+ print("setting random seed to be", seed)
+ torch.manual_seed(seed)
+ set_random_seed(seed)
+@@ -129,13 +176,14 @@
+ # hyperparameters
+ batch_size = 200
+ lr = 0.0001
+-epochs = 50
++lr = args.lr  # --lr; the original fixes 0.0001
++epochs = args.epochs
+ max_classes = 20
+-IS_MULTI = False # whether to use full CTDG instead of previous ground truth labels in the prediction
+-DELTA = 0.001
++IS_MULTI = args.multi # whether to use full CTDG instead of previous ground truth labels in the prediction
++DELTA = args.delta
+ 
+ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+-name = "tgbn-trade"
++name = args.name
+ dataset = PyGNodePropPredDataset(name=name, root="datasets")
+ train_mask = dataset.train_mask
+ val_mask = dataset.val_mask
+@@ -148,9 +196,23 @@
+ data = data.to(device)
+ evaluator = Evaluator(name=name)
+ 
++# ---- audit switches -------------------------------------------------------------------
++GLOBAL_STATE = args.global_state
++STRICT = args.cutoff == "strict"
++_lts = np.unique(np.asarray(dataset.dataset.label_ts))
++PERIOD = float(np.median(np.diff(_lts))) if _lts.size > 1 else 1.0
++LABEL_DELAY = args.label_delay * PERIOD
++EDGE_BUF = None  # strict mode: edges at/after the pending label time, carried to the next batch
++print(f"[audit] name={name} multi={IS_MULTI} global_state={GLOBAL_STATE} cutoff={args.cutoff} "
++      f"label_delay={args.label_delay}*P (P={PERIOD:g}) seed={seed} epochs={epochs} lr={lr:g} delta={DELTA:g} "
++      f"torch={torch.__version__} cuda={torch.version.cuda} reg_device={args.reg_device}")
++
+ 
+ def process_edges(src, dst, t, msg):
+-    msg = msg[:, 0:1].abs()  # take only the first column of the message
++    if args.edge_weight == "one":
++        msg = torch.ones_like(msg[:, 0:1])
++    else:
++        msg = msg[:, 0:1].abs()  # take only the first column of the message
+     node_pred.semi_labels.index_put_((src, dst), msg.reshape(-1), accumulate=True)
+ 
+ 
+@@ -198,8 +260,10 @@
+ 
+ 
+ def train():
++    global EDGE_BUF
+     node_pred.train()
+     node_pred.reset()  # Start with a fresh memory.
++    EDGE_BUF = None
+ 
+     total_loss = 0
+     label_t = dataset.get_label_time()  # check when does the first label start
+@@ -212,6 +276,11 @@
+     for batch in tqdm(train_loader):
+         batch = batch.to(device)
+         src, dst, t, msg = batch.src, batch.dst, batch.t, batch.msg
++        if EDGE_BUF is not None:
++            bs, bd, bt, bm = EDGE_BUF
++            src, dst, t, msg = (torch.cat([bs, src]), torch.cat([bd, dst]),
++                                torch.cat([bt, t]), torch.cat([bm, msg]))
++            EDGE_BUF = None
+         maxs = msg.max()
+         mins = msg.min()
+         max = maxs if maxs > max else max
+@@ -227,10 +296,11 @@
+                 label_tuple[2],
+             )
+             label_t = dataset.get_label_time()
++            node_pred.release(float(label_ts[0]))
+             label_srcs = label_srcs.to(device)
+ 
+             # Process all edges that are still in the past day
+-            previous_day_mask = batch.t < label_t
++            previous_day_mask = t < (int(label_ts[0]) if STRICT else label_t)
+             process_edges(
+                 src[previous_day_mask],
+                 dst[previous_day_mask],
+@@ -293,8 +363,11 @@
+             labels = torch.gather(labels, dim=1, index=top_idxs)
+ 
+             loss = criterion(preds, labels,
+-                            torch.count_nonzero(labels, dim=1).clamp(max=max_classes).to(device)).mean() + \
+-                  regularization(preds, labels.to(device))
++                            torch.count_nonzero(labels, dim=1).clamp(max=max_classes).to(device)).mean()
++            if args.reg_device == "cpu":  # same regularizer on CPU copies; gradients flow back to the GPU model
++                loss = loss + regularization(preds.cpu(), labels.cpu()).to(device)
++            else:
++                loss = loss + regularization(preds, labels.to(device))
+             total_loss += loss.item()
+             loss_count += 1
+             loss.backward()
+@@ -313,7 +386,13 @@
+             score = result_dict[eval_metric]
+             total_score += score
+             num_label_ts += 1
+-        process_edges(src, dst, t, msg)
++        if STRICT:
++            keep = t < label_t
++            process_edges(src[keep], dst[keep], t[keep], msg[keep])
++            if (~keep).any():
++                EDGE_BUF = (src[~keep], dst[~keep], t[~keep], msg[~keep])
++        else:
++            process_edges(src, dst, t, msg)
+ 
+     metric_dict = {
+         "ce": total_loss / loss_count,
+@@ -324,6 +403,7 @@
+ 
+ @torch.no_grad()
+ def test(loader):
++    global EDGE_BUF
+     node_pred.eval()
+ 
+     label_t = dataset.get_label_time()  # check when does the first label start
+@@ -333,6 +413,11 @@
+     for batch in tqdm(loader):
+         batch = batch.to(device)
+         src, dst, t, msg = batch.src, batch.dst, batch.t, batch.msg
++        if EDGE_BUF is not None:
++            bs, bd, bt, bm = EDGE_BUF
++            src, dst, t, msg = (torch.cat([bs, src]), torch.cat([bd, dst]),
++                                torch.cat([bt, t]), torch.cat([bm, msg]))
++            EDGE_BUF = None
+ 
+         query_t = batch.t[-1]
+         if query_t > label_t:
+@@ -345,13 +430,14 @@
+                 label_tuple[2],
+             )
+             label_t = dataset.get_label_time()
++            node_pred.release(float(label_ts[0]))
+             label_srcs = label_srcs.to(device)
+ 
+             # Process all edges that are still in the past day
+-            previous_day_mask = batch.t < label_t
++            previous_day_mask = t < (int(label_ts[0]) if STRICT else label_t)
+             # Reset edges to be the edges from tomorrow so they can be used later
+             # Process all edges that are still in the past day
+-            previous_day_mask = batch.t < label_t
++            previous_day_mask = t < (int(label_ts[0]) if STRICT else label_t)
+             process_edges(
+                 src[previous_day_mask],
+                 dst[previous_day_mask],
+@@ -390,7 +476,13 @@
+             score = result_dict[eval_metric]
+             total_score += score
+             num_label_ts += 1
+-        process_edges(src, dst, t, msg)
++        if STRICT:
++            keep = t < label_t
++            process_edges(src[keep], dst[keep], t[keep], msg[keep])
++            if (~keep).any():
++                EDGE_BUF = (src[~keep], dst[~keep], t[~keep], msg[~keep])
++        else:
++            process_edges(src, dst, t, msg)
+ 
+     metric_dict = {}
+     metric_dict[eval_metric] = total_score / num_label_ts
+@@ -404,6 +496,10 @@
+ best_test_idx = 0
+ train_loss = []
+ val_ncdg = []
++import json
++EPOCH_LOG = args.out.replace(".jsonl", "") + "_epochs.jsonl"
++RUN_ID = (f"{name}|multi={IS_MULTI}|gs={GLOBAL_STATE}|cut={args.cutoff}|delay={args.label_delay}"
++          f"|w={args.edge_weight}|reg={args.reg_device}|lr={lr:g}|delta={DELTA:g}|seed={seed}|{int(time.time())}")
+ for epoch in range(1, epochs + 1):
+     start_time = timeit.default_timer()
+     train_dict = train()
+@@ -435,7 +531,13 @@
+     test_curve.append(test_dict[eval_metric])
+     print("Test takes--- %s seconds ---" % (timeit.default_timer() - start_time))
+     print("------------------------------------")
++    with open(EPOCH_LOG, "a") as f:  # one line per finished epoch, so a crash does not lose finished epochs
++        f.write(json.dumps({"run": RUN_ID, "epoch": epoch, "train_ndcg": float(train_dict[eval_metric]),
++                            "val": float(val_dict[eval_metric]), "test": float(test_dict[eval_metric])}) + "\n")
+     dataset.reset_label_time()
++    if args.patience > 0 and epoch - (best_test_idx + 1) >= args.patience:
++        print(f"[audit] early stop: no val improvement for {args.patience} epochs")
++        break
+ 
+ # # code for plotting
+ # plot_curve(train_curve, "train_curve")
+@@ -453,4 +555,13 @@
+ with open("log_our_loss.csv", "w") as f:
+     f.write("epoch,train_loss,val_ncdg\n")
+     for i in range(len(train_loss)):
+-        f.write(f"{i+1},{train_loss[i]},{val_ncdg[i]}\n")
+\ No newline at end of file
++        f.write(f"{i+1},{train_loss[i]},{val_ncdg[i]}\n")
++
++with open(args.out, "a") as f:
++    f.write(json.dumps({"name": name, "multi": IS_MULTI, "global_state": GLOBAL_STATE,
++                        "cutoff": args.cutoff, "label_delay": args.label_delay, "seed": seed,
++                        "edge_weight": args.edge_weight, "reg_device": args.reg_device, "lr": lr, "delta": DELTA,
++                        "epochs": epochs, "epochs_run": len(val_curve), "patience": args.patience,
++                        "best_val": float(max_val_score),
++                        "best_epoch": best_test_idx + 1, "test_at_best_val": float(max_test_score)}) + "\n")
++print("[audit] appended result to", args.out)

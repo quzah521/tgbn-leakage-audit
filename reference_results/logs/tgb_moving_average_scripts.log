@@ -1,0 +1,19 @@
+# TGB's own MovingAverage example scripts (TGB repository, examples/nodeproppred/<name>/moving_average.py),
+# run with py-tgb 2.3.0; the window is 6 on tgbn-genre and 7 on the other datasets.
+# Printed in the order train, val, test (the scripts label every line "Persistant forecast").
+
+$ python examples\nodeproppred\tgbn-genre\moving_average.py
+{'ndcg': 0.5176277022196137}
+Persistant forecast on Training takes--- 19.220687700028066 seconds ---
+{'ndcg': 0.49876925094208485}
+Persistant forecast on validation takes--- 4.104378399963025 seconds ---
+{'ndcg': 0.5090415273037817}
+Persistant forecast on Test takes--- 3.563947099959478 seconds ---
+
+$ python examples\nodeproppred\tgbn-trade\moving_average.py
+{'ndcg': 0.7473925115245915}
+Persistant forecast on Training takes--- 0.39255689998390153 seconds ---
+{'ndcg': 0.8406319940337135}
+Persistant forecast on validation takes--- 0.06743190000997856 seconds ---
+{'ndcg': 0.8226423134116579}
+Persistant forecast on Test takes--- 0.05430700001306832 seconds ---

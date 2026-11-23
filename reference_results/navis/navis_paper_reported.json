@@ -1,0 +1,51 @@
+{
+  "source": "Feldman, Mantri, Eliasof, Baskin. Revisiting Node Affinity Prediction in Temporal Graphs. ICLR 2026 (arXiv:2510.06940).",
+  "note": "Mean over three runs as reported (std 0.001). Table 2 = methods use only previous ground-truth labels (NAVIS label mode); Table 1 = full CTDG (NAVIS edge mode). Used only where a configuration was not rerun; marked with a dagger in the tables.",
+  "label_setting_table2": {
+    "tgbn-trade": {
+      "val": 0.872,
+      "test": 0.863
+    },
+    "tgbn-genre": {
+      "val": 0.517,
+      "test": 0.528
+    },
+    "tgbn-reddit": {
+      "val": 0.584,
+      "test": 0.569
+    },
+    "tgbn-token": {
+      "val": 0.493,
+      "test": 0.513
+    }
+  },
+  "full_ctdg_table1": {
+    "tgbn-trade": {
+      "test": 0.863
+    },
+    "tgbn-genre": {
+      "val": 0.512,
+      "test": 0.52
+    },
+    "tgbn-reddit": {
+      "test": 0.552
+    },
+    "tgbn-token": {
+      "test": 0.444
+    }
+  },
+  "tgnv2_table1": {
+    "tgbn-trade": {
+      "test": 0.735
+    },
+    "tgbn-genre": {
+      "test": 0.469
+    },
+    "tgbn-reddit": {
+      "test": 0.507
+    },
+    "tgbn-token": {
+      "test": 0.294
+    }
+  }
+}

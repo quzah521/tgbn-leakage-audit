@@ -1,0 +1,345 @@
+{
+  "name": "tgbn-trade",
+  "unit": 1.0,
+  "unit_label": "year",
+  "source": "python -m label_probe tgb --all (py-tgb 2.3.0, numpy 2.4.4); summaries recomputed with the coverage-constrained window rule of this version",
+  "median_label_interval": 1.0,
+  "n_backward_steps": 0,
+  "settings": {
+    "cmd": "tgb",
+    "offsets": "-8:8",
+    "unit": "auto",
+    "n_label_times": 20,
+    "n_rows": 300,
+    "seed": 0,
+    "coverage": 0.99,
+    "by": null,
+    "max_width": 7,
+    "out_dir": "probe_results",
+    "root": "datasets"
+  },
+  "by": "abs",
+  "rows": [
+    {
+      "offset": -8,
+      "row_coverage": 0.8083472263751966,
+      "cos_count": 0.23003751121099403,
+      "cos_abs": 0.5179071732084342
+    },
+    {
+      "offset": -7,
+      "row_coverage": 0.8572669718587121,
+      "cos_count": 0.2450389191456332,
+      "cos_abs": 0.5614925140140625
+    },
+    {
+      "offset": -6,
+      "row_coverage": 0.907985242138641,
+      "cos_count": 0.26259317774551794,
+      "cos_abs": 0.6103005975242098
+    },
+    {
+      "offset": -5,
+      "row_coverage": 0.910870683093766,
+      "cos_count": 0.2652050127802287,
+      "cos_abs": 0.6279938998440229
+    },
+    {
+      "offset": -4,
+      "row_coverage": 0.96809141543247,
+      "cos_count": 0.2867261750821847,
+      "cos_abs": 0.6896102745115165
+    },
+    {
+      "offset": -3,
+      "row_coverage": 0.9681621719298417,
+      "cos_count": 0.29158469140110804,
+      "cos_abs": 0.7156910617902261
+    },
+    {
+      "offset": -2,
+      "row_coverage": 0.9751775650641828,
+      "cos_count": 0.30101606853887675,
+      "cos_abs": 0.7585693033529008
+    },
+    {
+      "offset": -1,
+      "row_coverage": 0.9832682087513451,
+      "cos_count": 0.31248910856924184,
+      "cos_abs": 0.8091609145159305
+    },
+    {
+      "offset": 0,
+      "row_coverage": 1.0,
+      "cos_count": 0.37506916253815237,
+      "cos_abs": 1.0
+    },
+    {
+      "offset": 1,
+      "row_coverage": 0.9840569432440696,
+      "cos_count": 0.3074646085057059,
+      "cos_abs": 0.8170138195966782
+    },
+    {
+      "offset": 2,
+      "row_coverage": 0.9793178329772612,
+      "cos_count": 0.2956496815866042,
+      "cos_abs": 0.7668365249688583
+    },
+    {
+      "offset": 3,
+      "row_coverage": 0.9758238239019066,
+      "cos_count": 0.2855681267687004,
+      "cos_abs": 0.7358534560663464
+    },
+    {
+      "offset": 4,
+      "row_coverage": 0.9239448000708006,
+      "cos_count": 0.2636216532480997,
+      "cos_abs": 0.6732005724072426
+    },
+    {
+      "offset": 5,
+      "row_coverage": 0.8717731213899231,
+      "cos_count": 0.24373591731739172,
+      "cos_abs": 0.618395634646489
+    },
+    {
+      "offset": 6,
+      "row_coverage": 0.8176176755021259,
+      "cos_count": 0.225675539736471,
+      "cos_abs": 0.5669591817158445
+    },
+    {
+      "offset": 7,
+      "row_coverage": 0.7622267497489436,
+      "cos_count": 0.20559375264516797,
+      "cos_abs": 0.5165326519749266
+    },
+    {
+      "offset": 8,
+      "row_coverage": 0.7095006275714958,
+      "cos_count": 0.18952301307527217,
+      "cos_abs": 0.46815872967664457
+    }
+  ],
+  "windows": [
+    {
+      "first": -6,
+      "last": 0,
+      "row_coverage": 1.0,
+      "cos_count": 0.37184328190317806,
+      "cos_abs": 0.855135097434373
+    },
+    {
+      "first": -5,
+      "last": 0,
+      "row_coverage": 1.0,
+      "cos_count": 0.37222536396994443,
+      "cos_abs": 0.8674643890951481
+    },
+    {
+      "first": -5,
+      "last": 1,
+      "row_coverage": 1.0,
+      "cos_count": 0.3746271263840907,
+      "cos_abs": 0.8803771415250091
+    },
+    {
+      "first": -4,
+      "last": 0,
+      "row_coverage": 1.0,
+      "cos_count": 0.3731998756752793,
+      "cos_abs": 0.8819973724534742
+    },
+    {
+      "first": -4,
+      "last": 1,
+      "row_coverage": 1.0,
+      "cos_count": 0.37542926717097364,
+      "cos_abs": 0.8930818138583103
+    },
+    {
+      "first": -4,
+      "last": 2,
+      "row_coverage": 1.0,
+      "cos_count": 0.3756662706135763,
+      "cos_abs": 0.894269203309628
+    },
+    {
+      "first": -3,
+      "last": 0,
+      "row_coverage": 1.0,
+      "cos_count": 0.3745419584025075,
+      "cos_abs": 0.8997673548130498
+    },
+    {
+      "first": -3,
+      "last": 1,
+      "row_coverage": 1.0,
+      "cos_count": 0.376363597625159,
+      "cos_abs": 0.9075523218024214
+    },
+    {
+      "first": -3,
+      "last": 2,
+      "row_coverage": 1.0,
+      "cos_count": 0.37611173018093386,
+      "cos_abs": 0.9053407614989848
+    },
+    {
+      "first": -3,
+      "last": 3,
+      "row_coverage": 1.0,
+      "cos_count": 0.37438654579104136,
+      "cos_abs": 0.8989591820691091
+    },
+    {
+      "first": -2,
+      "last": 0,
+      "row_coverage": 1.0,
+      "cos_count": 0.37566839618346565,
+      "cos_abs": 0.9217749507282201
+    },
+    {
+      "first": -2,
+      "last": 1,
+      "row_coverage": 1.0,
+      "cos_count": 0.37688407506836824,
+      "cos_abs": 0.9237328773646171
+    },
+    {
+      "first": -2,
+      "last": 2,
+      "row_coverage": 1.0,
+      "cos_count": 0.37594596577610445,
+      "cos_abs": 0.9161466863384378
+    },
+    {
+      "first": -2,
+      "last": 3,
+      "row_coverage": 1.0,
+      "cos_count": 0.373634547748546,
+      "cos_abs": 0.9057206075574562
+    },
+    {
+      "first": -2,
+      "last": 4,
+      "row_coverage": 1.0,
+      "cos_count": 0.3707880580237324,
+      "cos_abs": 0.8961995788023582
+    },
+    {
+      "first": -1,
+      "last": 0,
+      "row_coverage": 1.0,
+      "cos_count": 0.37611909563401147,
+      "cos_abs": 0.9511207342355574
+    },
+    {
+      "first": -1,
+      "last": 1,
+      "row_coverage": 1.0,
+      "cos_count": 0.3764829311471106,
+      "cos_abs": 0.9400093461200523
+    },
+    {
+      "first": -1,
+      "last": 2,
+      "row_coverage": 1.0,
+      "cos_count": 0.37455049555684405,
+      "cos_abs": 0.9242053481107494
+    },
+    {
+      "first": -1,
+      "last": 3,
+      "row_coverage": 1.0,
+      "cos_count": 0.37155840161994125,
+      "cos_abs": 0.9083559962773885
+    },
+    {
+      "first": -1,
+      "last": 4,
+      "row_coverage": 1.0,
+      "cos_count": 0.368303194122806,
+      "cos_abs": 0.8957044151573014
+    },
+    {
+      "first": -1,
+      "last": 5,
+      "row_coverage": 1.0,
+      "cos_count": 0.3654871034335804,
+      "cos_abs": 0.8849214510085549
+    },
+    {
+      "first": 0,
+      "last": 0,
+      "row_coverage": 1.0,
+      "cos_count": 0.37506916253815237,
+      "cos_abs": 1.0
+    },
+    {
+      "first": 0,
+      "last": 1,
+      "row_coverage": 1.0,
+      "cos_count": 0.3738365910565339,
+      "cos_abs": 0.9529402898972131
+    },
+    {
+      "first": 0,
+      "last": 2,
+      "row_coverage": 1.0,
+      "cos_count": 0.3710228230445919,
+      "cos_abs": 0.9233834533852011
+    },
+    {
+      "first": 0,
+      "last": 3,
+      "row_coverage": 1.0,
+      "cos_count": 0.3675516639790647,
+      "cos_abs": 0.9016554268482866
+    },
+    {
+      "first": 0,
+      "last": 4,
+      "row_coverage": 1.0,
+      "cos_count": 0.3640805784745021,
+      "cos_abs": 0.885999020385297
+    },
+    {
+      "first": 0,
+      "last": 5,
+      "row_coverage": 1.0,
+      "cos_count": 0.3612994796059462,
+      "cos_abs": 0.8736353172836109
+    },
+    {
+      "first": 0,
+      "last": 6,
+      "row_coverage": 1.0,
+      "cos_count": 0.3589198450288768,
+      "cos_abs": 0.864092758332396
+    }
+  ],
+  "summary": {
+    "by": "abs",
+    "peak_offset": 0,
+    "peak_cos": 1.0,
+    "window": [
+      0,
+      0
+    ],
+    "window_cos": 1.0,
+    "window_coverage": 1.0,
+    "availability_delay_units": 1.0,
+    "method": "window search (highest cosine among windows with full row coverage)",
+    "documented": [
+      0,
+      0
+    ],
+    "notes": [
+      "label window matches the documented window",
+      "label(L) is complete only at L + 1 units; using it as an input before then is look-ahead"
+    ]
+  }
+}

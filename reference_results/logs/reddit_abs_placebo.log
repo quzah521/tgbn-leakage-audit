@@ -1,0 +1,118 @@
+# Console output of the pre-release version of scripts/run_heuristics.py (then named rhythm_check.py).
+# Local paths removed. Numbers are those reported in the paper.
+$ python rhythm_check.py --name tgbn-reddit --cutoff strict
+[################################] 379137/379137 - 00:02:18
+27174119it [00:48, 557474.67it/s]
+12077151it [00:28, 420098.61it/s]
+dataset tgbn-reddit: 27,174,118 events, C=698, n_nodes=11,766, label times=1089, P=86400, cutoff=strict
+[real] channels: ['PF', 'EMA0.5', 'EMA0.7', 'EMA0.857143', 'EMA0.95', 'CNT', 'CUM', 'PCEMA0.5', 'PCEMA0.857143', 'DEC0.125P', 'DEC0.5P', 'DEC2P', 'DEC8P']  state memory ~0.49 GB
+[real] train pass done: 929 label times, 229s
+[real] val pass done: 83 label times, 40.7 candidate classes/node, 176s
+  Blend2 (no timing) best on val-sample: EMA0.95+0.1*CUM  ndcg=0.5902
+  Blend3 (+timing) best on val-sample: EMA0.95+0.1*CUM (+no DEC)  ndcg=0.5902
+  Fit-NoTime val-sample ndcg=0.5961
+  Fit-Time   val-sample ndcg=0.5961
+[real] selection done (60 val label times in sample), 65s
+[real] test pass done: 77 label times, 197s
+[placebo] channels: ['PF', 'EMA0.5', 'EMA0.7', 'EMA0.857143', 'EMA0.95', 'CNT', 'CUM', 'PCEMA0.5', 'PCEMA0.857143', 'DEC0.125P', 'DEC0.5P', 'DEC2P', 'DEC8P']  state memory ~0.49 GB
+[placebo] train pass done: 929 label times, 234s
+[placebo] val pass done: 83 label times, 40.7 candidate classes/node, 177s
+  Blend2 (no timing) best on val-sample: EMA0.95+0.1*CUM  ndcg=0.5902
+  Blend3 (+timing) best on val-sample: EMA0.95+0.1*CUM (+no DEC)  ndcg=0.5902
+  Fit-NoTime val-sample ndcg=0.5961
+  Fit-Time   val-sample ndcg=0.5961
+[placebo] selection done (60 val label times in sample), 63s
+[placebo] test pass done: 77 label times, 192s
+
+# rhythm check: tgbn-reddit  cutoff=strict
+
+- events 27,174,118, classes 698, nodes 11,766
+- median label interval P = 86400 (time units of the dataset)
+- label times evaluated: val 83, test 77
+- edges processed after L_i but before predicting L_i (mean per label time): 0.0
+- max over label times of (latest processed edge time - L_i): -1  (negative = no edge at/after L_i was used)
+
+## Validation (full val, single channels)
+
+| channel | NDCG@10 |
+|---|---|
+| PF | 0.3799 |
+| EMA0.5 | 0.5448 |
+| EMA0.7 | 0.5577 |
+| EMA0.857143 | 0.5741 |
+| EMA0.95 | 0.5845 |
+| CNT | 0.2744 |
+| CUM | 0.5033 |
+| PCEMA0.5 | 0.4928 |
+| PCEMA0.857143 | 0.5342 |
+| DEC0.125P | 0.4581 |
+| DEC0.5P | 0.4779 |
+| DEC2P | 0.4958 |
+| DEC8P | 0.5198 |
+
+## Selected blends (chosen on a val sample)
+
+- [real] **Blend2**: EMA0.95+0.1*CUM  (val-sample 0.5902)
+- [real] **Blend3**: EMA0.95+0.1*CUM (+no DEC)  (val-sample 0.5902)
+- [real] **Fit-NoTime**: 0.070*PF + 0.073*EMA0.5 + 0.626*EMA0.95 + 0.184*CUM + 0.048*PCEMA0.857143  (val-sample 0.5961)
+- [real] **Fit-Time**: 0.070*PF + 0.073*EMA0.5 + 0.626*EMA0.95 + 0.184*CUM + 0.048*PCEMA0.857143  (val-sample 0.5961)
+- [placebo] **Blend2**: EMA0.95+0.1*CUM  (val-sample 0.5902)
+- [placebo] **Blend3**: EMA0.95+0.1*CUM (+no DEC)  (val-sample 0.5902)
+- [placebo] **Fit-NoTime**: 0.070*PF + 0.073*EMA0.5 + 0.626*EMA0.95 + 0.184*CUM + 0.048*PCEMA0.857143  (val-sample 0.5961)
+- [placebo] **Fit-Time**: 0.070*PF + 0.073*EMA0.5 + 0.626*EMA0.95 + 0.184*CUM + 0.048*PCEMA0.857143  (val-sample 0.5961)
+
+## Test NDCG@10 (mean over label times)
+
+| config | real | placebo | real-placebo |
+|---|---|---|---|
+| Fit-Time | 0.5790 | 0.5790 | +0.0000 |
+| Fit-NoTime | 0.5790 | 0.5790 | +0.0000 |
+| Blend3 | 0.5735 | 0.5735 | +0.0000 |
+| Blend2 | 0.5735 | 0.5735 | +0.0000 |
+| PF | 0.3691 | 0.3691 | +0.0000 |
+| EMA0.5 | 0.5310 | 0.5310 | +0.0000 |
+| EMA0.7 | 0.5433 | 0.5433 | +0.0000 |
+| EMA0.857143 | 0.5593 | 0.5593 | +0.0000 |
+| EMA0.95 | 0.5717 | 0.5717 | +0.0000 |
+| CNT | 0.2664 | 0.2664 | +0.0000 |
+| CUM | 0.4854 | 0.4854 | +0.0000 |
+| PCEMA0.5 | 0.4796 | 0.4796 | +0.0000 |
+| PCEMA0.857143 | 0.5209 | 0.5209 | +0.0000 |
+| DEC0.125P | 0.4459 | 0.4463 | -0.0004 |
+| DEC0.5P | 0.4650 | 0.4648 | +0.0001 |
+| DEC2P | 0.4815 | 0.4816 | -0.0002 |
+| DEC8P | 0.5053 | 0.5053 | -0.0000 |
+
+## Paired comparisons over test label times
+
+- real: Fit-Time vs Fit-NoTime: diff=+0.0000  95%CI=[+0.0000,+0.0000]  win=0.00  Wilcoxon p=nan  (n=77)
+- real: Blend3 vs Blend2: diff=+0.0000  95%CI=[+0.0000,+0.0000]  win=0.00  Wilcoxon p=nan  (n=77)
+- real: best DEC single (DEC8P) vs best no-timing single (EMA0.95): diff=-0.0664  95%CI=[-0.0671,-0.0658]  win=0.00  Wilcoxon p=2.46e-14  (n=77)
+- placebo: Fit-Time vs Fit-NoTime: diff=+0.0000  95%CI=[+0.0000,+0.0000]  win=0.00  Wilcoxon p=nan  (n=77)
+- Fit-Time: real vs placebo: diff=+0.0000  95%CI=[+0.0000,+0.0000]  win=0.00  Wilcoxon p=nan  (n=77)
+- Fit-NoTime: real vs placebo (sanity, should be ~0): diff=+0.0000  95%CI=[+0.0000,+0.0000]  win=0.00  Wilcoxon p=nan  (n=77)
+- timing gain: real minus placebo (difference-in-differences): diff=+0.0000  95%CI=[+0.0000,+0.0000]  win=0.00  Wilcoxon p=nan  (n=77)
+
+## Label-window probe (cosine between label at L and edges in [L+a*u, L+(a+1)*u))
+
+unit u = 86400
+
+| a | row_coverage | cos_one | cos_abs |
+|---|---|---|---|
+| -8 | 0.665 | 0.189 | 0.171 |
+| -7 | 0.649 | 0.181 | 0.163 |
+| -6 | 0.667 | 0.192 | 0.173 |
+| -5 | 0.698 | 0.195 | 0.177 |
+| -4 | 0.677 | 0.196 | 0.177 |
+| -3 | 0.673 | 0.198 | 0.177 |
+| -2 | 0.704 | 0.206 | 0.184 |
+| -1 | 0.699 | 0.208 | 0.189 |
+| 0 | 0.678 | 0.202 | 0.179 |
+| 1 | 0.687 | 0.202 | 0.184 |
+| 2 | 0.724 | 0.215 | 0.194 |
+| 3 | 0.718 | 0.223 | 0.202 |
+| 4 | 0.719 | 0.258 | 0.238 |
+| 5 | 1.000 | 0.939 | 0.846 |
+| 6 | 0.747 | 0.266 | 0.232 |
+| 7 | 0.706 | 0.216 | 0.195 |
+| 8 | 0.730 | 0.217 | 0.192 |

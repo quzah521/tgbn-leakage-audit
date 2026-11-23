@@ -1,0 +1,41 @@
+# tgbn-reddit, NAVIS edge mode with --debug_checks: CUDA device-side assert inside HindgeRegularization.
+$ python navis_audit.py --name tgbn-reddit --multi --cutoff strict --debug_checks
+setting random seed to be 2
+12077151it [00:54, 219587.96it/s]
+[audit] name=tgbn-reddit multi=True global_state=leaky cutoff=strict label_delay=0.0*P (P=86400) seed=2 epochs=50
+  0%|                                                                                                                                                                                | 1/95110 [00:00<8:38:11,  3.06it/s]torch/functional.py:505: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /pytorch/aten/src/ATen/native/TensorShape.cpp:4381.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 95110/95110 [32:25<00:00, 48.88it/s]
+------------------------------------
+training Epoch: 01
+{'ce': 0.6695369954258044, 'ndcg': 0.4761143317120296}
+Training takes--- 1945.7127776816487 seconds ---
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20381/20381 [02:40<00:00, 127.08it/s]
+{'ndcg': 0.49379410777000504}
+Validation takes--- 160.38309071213007 seconds ---
+ 93%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▊            | 18944/20381 [02:29<00:11, 127.05it/s]
+{'ndcg': 0.4798400998649012}
+Test takes--- 149.1080096885562 seconds ---
+------------------------------------
+ 86%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████                        | 81931/95110 [27:48<01:49, 120.29it/s]/pytorch/aten/src/ATen/native/cuda/ScatterGatherKernel.cu:163: operator(): block: [127,0,0], thread: [74,0,0] Assertion `idx_dim >= 0 && idx_dim < index_size && "scatter gather kernel index out of bounds"` failed.
+ 86%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▉                        | 81941/95110 [27:51<04:28, 49.02it/s]
+Traceback (most recent call last):
+  File "navis_audit.py", line 531, in <module>
+    train_dict = train()
+                 ^^^^^^^
+  File "navis_audit.py", line 391, in train
+    regularization(preds, labels.to(device))
+  File "torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "regularization.py", line 85, in forward
+    return l1_loss + l2_loss + l3_loss
+           ~~~~~~~~^~~~~~~~~
+torch.AcceleratorError: CUDA error: device-side assert triggered
+Search for `cudaErrorAssert' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.

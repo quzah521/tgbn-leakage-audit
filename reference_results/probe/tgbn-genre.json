@@ -1,0 +1,345 @@
+{
+  "name": "tgbn-genre",
+  "unit": 86400.0,
+  "unit_label": "day",
+  "source": "python -m label_probe tgb --all (py-tgb 2.3.0, numpy 2.4.4); summaries recomputed with the coverage-constrained window rule of this version",
+  "median_label_interval": 86400.0,
+  "n_backward_steps": 5,
+  "settings": {
+    "cmd": "tgb",
+    "offsets": "-8:8",
+    "unit": "auto",
+    "n_label_times": 20,
+    "n_rows": 300,
+    "seed": 0,
+    "coverage": 0.99,
+    "by": null,
+    "max_width": 7,
+    "out_dir": "probe_results",
+    "root": "datasets"
+  },
+  "by": "abs",
+  "rows": [
+    {
+      "offset": -8,
+      "row_coverage": 0.7166219224270622,
+      "cos_count": 0.2543478596709551,
+      "cos_abs": 0.25130803892119263
+    },
+    {
+      "offset": -7,
+      "row_coverage": 0.7274522357353559,
+      "cos_count": 0.2538605082731117,
+      "cos_abs": 0.2520249989175055
+    },
+    {
+      "offset": -6,
+      "row_coverage": 0.7071814113855094,
+      "cos_count": 0.24925534248545267,
+      "cos_abs": 0.24523801443170462
+    },
+    {
+      "offset": -5,
+      "row_coverage": 0.6978496964870223,
+      "cos_count": 0.24667748982617246,
+      "cos_abs": 0.24492746289725761
+    },
+    {
+      "offset": -4,
+      "row_coverage": 0.7271519906504831,
+      "cos_count": 0.2541133927607425,
+      "cos_abs": 0.254208907755984
+    },
+    {
+      "offset": -3,
+      "row_coverage": 0.7362269932223998,
+      "cos_count": 0.25892277089460936,
+      "cos_abs": 0.25485064302335747
+    },
+    {
+      "offset": -2,
+      "row_coverage": 0.7443789106167051,
+      "cos_count": 0.2675270095606797,
+      "cos_abs": 0.264447836221785
+    },
+    {
+      "offset": -1,
+      "row_coverage": 0.7594099661947784,
+      "cos_count": 0.27671995871312155,
+      "cos_abs": 0.27408693596985667
+    },
+    {
+      "offset": 0,
+      "row_coverage": 0.7654352384825679,
+      "cos_count": 0.2776926762926809,
+      "cos_abs": 0.2744474552141588
+    },
+    {
+      "offset": 1,
+      "row_coverage": 0.7616176326806536,
+      "cos_count": 0.2865838914153001,
+      "cos_abs": 0.28452946196478285
+    },
+    {
+      "offset": 2,
+      "row_coverage": 0.7504962290240338,
+      "cos_count": 0.2838274826125876,
+      "cos_abs": 0.28275653064708833
+    },
+    {
+      "offset": 3,
+      "row_coverage": 0.7816449397881405,
+      "cos_count": 0.31724063651798756,
+      "cos_abs": 0.3143441453194921
+    },
+    {
+      "offset": 4,
+      "row_coverage": 0.7939463835047958,
+      "cos_count": 0.37037310708895543,
+      "cos_abs": 0.3719725645286847
+    },
+    {
+      "offset": 5,
+      "row_coverage": 0.8272877719735747,
+      "cos_count": 0.6770504941552622,
+      "cos_abs": 0.6950163329296729
+    },
+    {
+      "offset": 6,
+      "row_coverage": 0.9994405594405595,
+      "cos_count": 0.39565438549262394,
+      "cos_abs": 0.39382457087646905
+    },
+    {
+      "offset": 7,
+      "row_coverage": 0.8023926777150076,
+      "cos_count": 0.304639165329262,
+      "cos_abs": 0.3018644430614925
+    },
+    {
+      "offset": 8,
+      "row_coverage": 0.7452515627794873,
+      "cos_count": 0.2777953357905182,
+      "cos_abs": 0.2754894766876557
+    }
+  ],
+  "windows": [
+    {
+      "first": -1,
+      "last": 5,
+      "row_coverage": 0.9971369469115101,
+      "cos_count": 0.5808999905273378,
+      "cos_abs": 0.58646931477317
+    },
+    {
+      "first": 0,
+      "last": 5,
+      "row_coverage": 0.9961525170354097,
+      "cos_count": 0.592082308956618,
+      "cos_abs": 0.5981642896543502
+    },
+    {
+      "first": 0,
+      "last": 6,
+      "row_coverage": 1.0,
+      "cos_count": 0.585675996003018,
+      "cos_abs": 0.5910072331888523
+    },
+    {
+      "first": 1,
+      "last": 5,
+      "row_coverage": 0.9932674126721099,
+      "cos_count": 0.6080336913829114,
+      "cos_abs": 0.6154469865115735
+    },
+    {
+      "first": 1,
+      "last": 6,
+      "row_coverage": 1.0,
+      "cos_count": 0.596167018327645,
+      "cos_abs": 0.6026572882286299
+    },
+    {
+      "first": 1,
+      "last": 7,
+      "row_coverage": 1.0,
+      "cos_count": 0.5868176728447261,
+      "cos_abs": 0.5930014432177362
+    },
+    {
+      "first": 2,
+      "last": 5,
+      "row_coverage": 0.9859618655669588,
+      "cos_count": 0.6225888177679012,
+      "cos_abs": 0.6311552417021613
+    },
+    {
+      "first": 2,
+      "last": 6,
+      "row_coverage": 0.9996969696969696,
+      "cos_count": 0.6053729680185934,
+      "cos_abs": 0.6122488201481677
+    },
+    {
+      "first": 2,
+      "last": 7,
+      "row_coverage": 0.9996969696969696,
+      "cos_count": 0.5930773052666499,
+      "cos_abs": 0.599396466257404
+    },
+    {
+      "first": 2,
+      "last": 8,
+      "row_coverage": 0.9996969696969696,
+      "cos_count": 0.5856533422820336,
+      "cos_abs": 0.5916274666120289
+    },
+    {
+      "first": 3,
+      "last": 5,
+      "row_coverage": 0.9728715900732279,
+      "cos_count": 0.6441433651477817,
+      "cos_abs": 0.6543472016693084
+    },
+    {
+      "first": 3,
+      "last": 6,
+      "row_coverage": 0.9996969696969696,
+      "cos_count": 0.6170741038356888,
+      "cos_abs": 0.6244404988368439
+    },
+    {
+      "first": 3,
+      "last": 7,
+      "row_coverage": 0.9996969696969696,
+      "cos_count": 0.600534330690954,
+      "cos_abs": 0.6071099812634517
+    },
+    {
+      "first": 3,
+      "last": 8,
+      "row_coverage": 0.9996969696969696,
+      "cos_count": 0.5910807410674233,
+      "cos_abs": 0.5968039910695964
+    },
+    {
+      "first": 3,
+      "last": 9,
+      "row_coverage": 0.9996969696969696,
+      "cos_count": 0.5819012510678025,
+      "cos_abs": 0.5869936623871832
+    },
+    {
+      "first": 4,
+      "last": 5,
+      "row_coverage": 0.9359055863406528,
+      "cos_count": 0.6677412949316233,
+      "cos_abs": 0.6812707469717647
+    },
+    {
+      "first": 4,
+      "last": 6,
+      "row_coverage": 0.9996969696969696,
+      "cos_count": 0.6284120921920158,
+      "cos_abs": 0.6368607861064081
+    },
+    {
+      "first": 4,
+      "last": 7,
+      "row_coverage": 0.9996969696969696,
+      "cos_count": 0.6062668543484001,
+      "cos_abs": 0.6133744767766663
+    },
+    {
+      "first": 4,
+      "last": 8,
+      "row_coverage": 0.9996969696969696,
+      "cos_count": 0.5931633929593184,
+      "cos_abs": 0.5992925626957102
+    },
+    {
+      "first": 4,
+      "last": 9,
+      "row_coverage": 0.9996969696969696,
+      "cos_count": 0.5820091915935284,
+      "cos_abs": 0.5874554663845937
+    },
+    {
+      "first": 4,
+      "last": 10,
+      "row_coverage": 0.9996969696969696,
+      "cos_count": 0.5721771428840285,
+      "cos_abs": 0.5776449927677677
+    },
+    {
+      "first": 5,
+      "last": 5,
+      "row_coverage": 0.8272877719735747,
+      "cos_count": 0.6770504941552622,
+      "cos_abs": 0.6950163329296729
+    },
+    {
+      "first": 5,
+      "last": 6,
+      "row_coverage": 0.9994405594405595,
+      "cos_count": 0.6262458347844759,
+      "cos_abs": 0.6357556346144146
+    },
+    {
+      "first": 5,
+      "last": 7,
+      "row_coverage": 0.9994405594405595,
+      "cos_count": 0.5982002793638245,
+      "cos_abs": 0.6049659801320981
+    },
+    {
+      "first": 5,
+      "last": 8,
+      "row_coverage": 0.9996969696969696,
+      "cos_count": 0.5834982299301418,
+      "cos_abs": 0.5889057961413944
+    },
+    {
+      "first": 5,
+      "last": 9,
+      "row_coverage": 0.9996969696969696,
+      "cos_count": 0.5716050404378528,
+      "cos_abs": 0.5760827893660182
+    },
+    {
+      "first": 5,
+      "last": 10,
+      "row_coverage": 0.9996969696969696,
+      "cos_count": 0.5613387853253412,
+      "cos_abs": 0.5657608184620905
+    },
+    {
+      "first": 5,
+      "last": 11,
+      "row_coverage": 0.9996969696969696,
+      "cos_count": 0.5548792930565281,
+      "cos_abs": 0.5584213110693461
+    }
+  ],
+  "summary": {
+    "by": "abs",
+    "peak_offset": 5,
+    "peak_cos": 0.6950163329296729,
+    "window": [
+      4,
+      6
+    ],
+    "window_cos": 0.6368607861064081,
+    "window_coverage": 0.9996969696969696,
+    "availability_delay_units": 7.0,
+    "method": "window search (highest cosine among windows with full row coverage)",
+    "documented": [
+      0,
+      6
+    ],
+    "notes": [
+      "label window covers only part of the documented window (0, 6)",
+      "label(L) is complete only at L + 7 units; using it as an input before then is look-ahead"
+    ]
+  }
+}

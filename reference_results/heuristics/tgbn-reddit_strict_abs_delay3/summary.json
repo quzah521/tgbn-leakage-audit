@@ -1,0 +1,76 @@
+{
+  "source": "converted from logs/probes_and_reddit_abs_delay_sweep.log (4-decimal precision; pre-release code version)",
+  "args": {
+    "name": "tgbn-reddit",
+    "weight": "abs"
+  },
+  "cutoff": "strict",
+  "meta": {
+    "label_delay": 3.0
+  },
+  "test_mean": {
+    "real": {
+      "Fit-Time": 0.5632,
+      "Fit-NoTime": 0.5632,
+      "Blend3": 0.5633,
+      "Blend2": 0.5633,
+      "Fit-LabelOnly": 0.56,
+      "Fit-EdgeOnly": 0.5379,
+      "PF": 0.3144,
+      "EMA0.5": 0.4935,
+      "EMA0.7": 0.5122,
+      "EMA0.857143": 0.5379,
+      "EMA0.95": 0.56,
+      "CNT": 0.2664,
+      "CUM": 0.4854,
+      "PCEMA0.5": 0.4796,
+      "PCEMA0.857143": 0.5209,
+      "DEC0.125P": 0.4459,
+      "DEC0.5P": 0.465,
+      "DEC2P": 0.4815,
+      "DEC8P": 0.5053
+    }
+  },
+  "comparisons": {
+    "real: Fit-LabelOnly vs Fit-EdgeOnly": {
+      "mean_diff": 0.0221,
+      "ci95": [
+        0.0215,
+        0.0228
+      ],
+      "win_rate": 1.0,
+      "wilcoxon_p": 2.46e-14,
+      "n": 77
+    },
+    "real: Fit-Time vs Fit-NoTime": {
+      "mean_diff": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "win_rate": 0.0,
+      "wilcoxon_p": NaN,
+      "n": 77
+    },
+    "real: Blend3 vs Blend2": {
+      "mean_diff": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "win_rate": 0.0,
+      "wilcoxon_p": NaN,
+      "n": 77
+    },
+    "real: best DEC single (DEC8P) vs best no-timing single (EMA0.95)": {
+      "mean_diff": -0.0548,
+      "ci95": [
+        -0.0555,
+        -0.0541
+      ],
+      "win_rate": 0.0,
+      "wilcoxon_p": 2.46e-14,
+      "n": 77
+    }
+  }
+}

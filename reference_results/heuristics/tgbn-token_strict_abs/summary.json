@@ -1,0 +1,102 @@
+{
+  "source": "converted from logs/token_delay_0_6.log (4-decimal precision); PF / MA test values at full precision",
+  "args": {
+    "name": "tgbn-token",
+    "weight": "abs"
+  },
+  "cutoff": "strict",
+  "meta": {
+    "label_delay": 0.0
+  },
+  "test_mean": {
+    "real": {
+      "Fit-Time": 0.5133,
+      "Fit-NoTime": 0.5132,
+      "Blend3": 0.5084,
+      "Blend2": 0.5084,
+      "Fit-LabelOnly": 0.5127,
+      "Fit-EdgeOnly": 0.447,
+      "PF": 0.4301,
+      "EMA0.5": 0.5083,
+      "EMA0.7": 0.5114,
+      "EMA0.857143": 0.5084684242442695,
+      "EMA0.95": 0.4863,
+      "CNT": 0.2977,
+      "CUM": 0.414,
+      "PCEMA0.5": 0.4225,
+      "PCEMA0.857143": 0.4302,
+      "DEC0.125P": 0.4114,
+      "DEC0.5P": 0.4287,
+      "DEC2P": 0.4374,
+      "DEC8P": 0.4449,
+      "MA": 0.5084684242442695
+    }
+  },
+  "val_mean": {
+    "real": {
+      "PF": 0.4026,
+      "EMA0.5": 0.4846,
+      "EMA0.7": 0.4906,
+      "EMA0.857143": 0.4907,
+      "EMA0.95": 0.4727,
+      "CNT": 0.2651,
+      "CUM": 0.4008,
+      "PCEMA0.5": 0.4013,
+      "PCEMA0.857143": 0.4106,
+      "DEC0.125P": 0.3784,
+      "DEC0.5P": 0.4034,
+      "DEC2P": 0.4132,
+      "DEC8P": 0.423,
+      "MA": 0.4907
+    }
+  },
+  "comparisons": {
+    "real: Fit-LabelOnly vs Fit-EdgeOnly": {
+      "mean_diff": 0.0657,
+      "ci95": [
+        0.061,
+        0.0707
+      ],
+      "win_rate": 1.0,
+      "wilcoxon_p": 4.77e-07,
+      "n": 22
+    },
+    "real: Fit-Time vs Fit-NoTime": {
+      "mean_diff": 0.0001,
+      "ci95": [
+        0.0001,
+        0.0002
+      ],
+      "win_rate": 0.77,
+      "wilcoxon_p": 0.00528,
+      "n": 22
+    },
+    "real: Blend3 vs Blend2": {
+      "mean_diff": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "win_rate": 0.0,
+      "wilcoxon_p": NaN,
+      "n": 22
+    },
+    "real: best DEC single (DEC8P) vs best no-timing single (EMA0.857143)": {
+      "mean_diff": -0.0635,
+      "ci95": [
+        -0.0674,
+        -0.0598
+      ],
+      "win_rate": 0.0,
+      "wilcoxon_p": 4.77e-07,
+      "n": 22
+    }
+  },
+  "diagnostics": {
+    "real": {
+      "leak_mean_edges": 0.0,
+      "max_now_minus_lt": -1.0
+    }
+  },
+  "ma_key": "EMA0.857143"
+}

@@ -1,0 +1,254 @@
+{
+  "tgbn-trade": {
+    "period": 1.0,
+    "protocol": {
+      "train": {
+        "query_times": 22,
+        "mean_n_eq": 14089.318181818182,
+        "mean_n_gt": 0.0,
+        "max_n_gt": 0,
+        "share_queries_with_leak": 1.0,
+        "max_delta": 0.0,
+        "edges_per_label_interval": 14661.91304347826
+      },
+      "val": {
+        "query_times": 4,
+        "mean_n_eq": 18056.25,
+        "mean_n_gt": 0.0,
+        "max_n_gt": 0,
+        "share_queries_with_leak": 1.0,
+        "max_delta": 0.0,
+        "edges_per_label_interval": 24390.0
+      },
+      "test": {
+        "query_times": 3,
+        "mean_n_eq": 19125.666666666668,
+        "mean_n_gt": 0.0,
+        "max_n_gt": 0,
+        "share_queries_with_leak": 1.0,
+        "max_delta": 0.0,
+        "edges_per_label_interval": 28925.5
+      },
+      "check_stream_counter_mean": 15157.48275862069
+    },
+    "strict": {
+      "train": {
+        "query_times": 22,
+        "mean_n_eq": 0.0,
+        "mean_n_gt": 0.0,
+        "max_n_gt": 0,
+        "share_queries_with_leak": 0.0,
+        "max_delta": -1.0,
+        "edges_per_label_interval": 14661.91304347826
+      },
+      "val": {
+        "query_times": 4,
+        "mean_n_eq": 0.0,
+        "mean_n_gt": 0.0,
+        "max_n_gt": 0,
+        "share_queries_with_leak": 0.0,
+        "max_delta": -1.0,
+        "edges_per_label_interval": 24390.0
+      },
+      "test": {
+        "query_times": 3,
+        "mean_n_eq": 0.0,
+        "mean_n_gt": 0.0,
+        "max_n_gt": 0,
+        "share_queries_with_leak": 0.0,
+        "max_delta": -1.0,
+        "edges_per_label_interval": 28925.5
+      },
+      "check_stream_counter_mean": 0.0
+    }
+  },
+  "tgbn-genre": {
+    "period": 86400.0,
+    "protocol": {
+      "train": {
+        "query_times": 1250,
+        "mean_n_eq": 1.2248,
+        "mean_n_gt": 100.0048,
+        "max_n_gt": 268,
+        "share_queries_with_leak": 1.0,
+        "max_delta": 64743.0,
+        "edges_per_label_interval": 9994.173058678942
+      },
+      "val": {
+        "query_times": 163,
+        "mean_n_eq": 1.656441717791411,
+        "mean_n_gt": 104.56441717791411,
+        "max_n_gt": 199,
+        "share_queries_with_leak": 1.0,
+        "max_delta": 1565.0,
+        "edges_per_label_interval": 16507.177946691154
+      },
+      "test": {
+        "query_times": 166,
+        "mean_n_eq": 1.5963855421686748,
+        "mean_n_gt": 99.78313253012048,
+        "max_n_gt": 200,
+        "share_queries_with_leak": 0.9939759036144579,
+        "max_delta": 8404.0,
+        "edges_per_label_interval": 15416.756023099628
+      },
+      "check_stream_counter_mean": 101.760607979734
+    },
+    "strict": {
+      "train": {
+        "query_times": 1250,
+        "mean_n_eq": 0.0,
+        "mean_n_gt": 0.0,
+        "max_n_gt": 0,
+        "share_queries_with_leak": 0.0,
+        "max_delta": -55.0,
+        "edges_per_label_interval": 9994.173058678942
+      },
+      "val": {
+        "query_times": 163,
+        "mean_n_eq": 0.0,
+        "mean_n_gt": 0.0,
+        "max_n_gt": 0,
+        "share_queries_with_leak": 0.0,
+        "max_delta": -55.0,
+        "edges_per_label_interval": 16507.177946691154
+      },
+      "test": {
+        "query_times": 166,
+        "mean_n_eq": 0.0,
+        "mean_n_gt": 0.0,
+        "max_n_gt": 0,
+        "share_queries_with_leak": 0.0,
+        "max_delta": -55.0,
+        "edges_per_label_interval": 15416.756023099628
+      },
+      "check_stream_counter_mean": 0.0
+    }
+  },
+  "tgbn-reddit": {
+    "period": 86400.0,
+    "protocol": {
+      "train": {
+        "query_times": 929,
+        "mean_n_eq": 0.26480086114101187,
+        "mean_n_gt": 101.06566200215285,
+        "max_n_gt": 200,
+        "share_queries_with_leak": 1.0,
+        "max_delta": 28560.0,
+        "edges_per_label_interval": 20456.788492971365
+      },
+      "val": {
+        "query_times": 83,
+        "mean_n_eq": 0.6024096385542169,
+        "mean_n_gt": 102.93975903614458,
+        "max_n_gt": 199,
+        "share_queries_with_leak": 1.0,
+        "max_delta": 1030.0,
+        "edges_per_label_interval": 49127.41364920556
+      },
+      "test": {
+        "query_times": 77,
+        "mean_n_eq": 0.6883116883116883,
+        "mean_n_gt": 90.8961038961039,
+        "max_n_gt": 199,
+        "share_queries_with_leak": 0.987012987012987,
+        "max_delta": 364.0,
+        "edges_per_label_interval": 49007.827360666925
+      },
+      "check_stream_counter_mean": 100.8099173553719
+    },
+    "strict": {
+      "train": {
+        "query_times": 929,
+        "mean_n_eq": 0.0,
+        "mean_n_gt": 0.0,
+        "max_n_gt": 0,
+        "share_queries_with_leak": 0.0,
+        "max_delta": -1.0,
+        "edges_per_label_interval": 20456.788492971365
+      },
+      "val": {
+        "query_times": 83,
+        "mean_n_eq": 0.0,
+        "mean_n_gt": 0.0,
+        "max_n_gt": 0,
+        "share_queries_with_leak": 0.0,
+        "max_delta": -1.0,
+        "edges_per_label_interval": 49127.41364920556
+      },
+      "test": {
+        "query_times": 77,
+        "mean_n_eq": 0.0,
+        "mean_n_gt": 0.0,
+        "max_n_gt": 0,
+        "share_queries_with_leak": 0.0,
+        "max_delta": -1.0,
+        "edges_per_label_interval": 49007.827360666925
+      },
+      "check_stream_counter_mean": 0.0
+    }
+  },
+  "tgbn-token": {
+    "period": 86400.0,
+    "protocol": {
+      "train": {
+        "query_times": 733,
+        "mean_n_eq": 0.4679399727148704,
+        "mean_n_gt": 106.10641200545703,
+        "max_n_gt": 400,
+        "share_queries_with_leak": 1.0,
+        "max_delta": 189429.0,
+        "edges_per_label_interval": 69575.35641039035
+      },
+      "val": {
+        "query_times": 29,
+        "mean_n_eq": 3.206896551724138,
+        "mean_n_gt": 89.03448275862068,
+        "max_n_gt": 181,
+        "share_queries_with_leak": 1.0,
+        "max_delta": 102.0,
+        "edges_per_label_interval": 378432.1909357102
+      },
+      "test": {
+        "query_times": 22,
+        "mean_n_eq": 3.4545454545454546,
+        "mean_n_gt": 108.22727272727273,
+        "max_n_gt": 200,
+        "share_queries_with_leak": 0.9545454545454546,
+        "max_delta": 170.0,
+        "edges_per_label_interval": 387610.0691723552
+      },
+      "check_stream_counter_mean": 106.1875
+    },
+    "strict": {
+      "train": {
+        "query_times": 733,
+        "mean_n_eq": 0.0,
+        "mean_n_gt": 0.0,
+        "max_n_gt": 0,
+        "share_queries_with_leak": 0.0,
+        "max_delta": -1.0,
+        "edges_per_label_interval": 69575.35641039035
+      },
+      "val": {
+        "query_times": 29,
+        "mean_n_eq": 0.0,
+        "mean_n_gt": 0.0,
+        "max_n_gt": 0,
+        "share_queries_with_leak": 0.0,
+        "max_delta": -2.0,
+        "edges_per_label_interval": 378432.1909357102
+      },
+      "test": {
+        "query_times": 22,
+        "mean_n_eq": 0.0,
+        "mean_n_gt": 0.0,
+        "max_n_gt": 0,
+        "share_queries_with_leak": 0.0,
+        "max_delta": -1.0,
+        "edges_per_label_interval": 387610.0691723552
+      },
+      "check_stream_counter_mean": 0.0
+    }
+  }
+}

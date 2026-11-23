@@ -1,0 +1,345 @@
+{
+  "name": "tgbn-token",
+  "unit": 86400.0,
+  "unit_label": "day",
+  "source": "python -m label_probe tgb --all (py-tgb 2.3.0, numpy 2.4.4); summaries recomputed with the coverage-constrained window rule of this version",
+  "median_label_interval": 86400.0,
+  "n_backward_steps": 0,
+  "settings": {
+    "cmd": "tgb",
+    "offsets": "-8:8",
+    "unit": "auto",
+    "n_label_times": 20,
+    "n_rows": 300,
+    "seed": 0,
+    "coverage": 0.99,
+    "by": null,
+    "max_width": 7,
+    "out_dir": "probe_results",
+    "root": "datasets"
+  },
+  "by": "abs",
+  "rows": [
+    {
+      "offset": -8,
+      "row_coverage": 0.4083508979492779,
+      "cos_count": 0.27203309124914227,
+      "cos_abs": 0.2715536144800136
+    },
+    {
+      "offset": -7,
+      "row_coverage": 0.38326078449217327,
+      "cos_count": 0.25529368632223065,
+      "cos_abs": 0.25472844030043384
+    },
+    {
+      "offset": -6,
+      "row_coverage": 0.377379019536464,
+      "cos_count": 0.26036341817334574,
+      "cos_abs": 0.2606755926992024
+    },
+    {
+      "offset": -5,
+      "row_coverage": 0.3850382235165635,
+      "cos_count": 0.2717518384659132,
+      "cos_abs": 0.27219648353035847
+    },
+    {
+      "offset": -4,
+      "row_coverage": 0.38038341827448124,
+      "cos_count": 0.25105555129896445,
+      "cos_abs": 0.2518623218638961
+    },
+    {
+      "offset": -3,
+      "row_coverage": 0.4037882235165634,
+      "cos_count": 0.2755910747025553,
+      "cos_abs": 0.2760808632281745
+    },
+    {
+      "offset": -2,
+      "row_coverage": 0.46147046778303596,
+      "cos_count": 0.32660116803377826,
+      "cos_abs": 0.3272480554295105
+    },
+    {
+      "offset": -1,
+      "row_coverage": 0.47430616733406145,
+      "cos_count": 0.3350898724941729,
+      "cos_abs": 0.33587755824528004
+    },
+    {
+      "offset": 0,
+      "row_coverage": 0.4527515168062129,
+      "cos_count": 0.3129770586884361,
+      "cos_abs": 0.3130076376845782
+    },
+    {
+      "offset": 1,
+      "row_coverage": 0.4569778091251061,
+      "cos_count": 0.3292279757834768,
+      "cos_abs": 0.3309219657754986
+    },
+    {
+      "offset": 2,
+      "row_coverage": 0.4506451431865065,
+      "cos_count": 0.3269097791297396,
+      "cos_abs": 0.3266472013868701
+    },
+    {
+      "offset": 3,
+      "row_coverage": 0.46369800388302396,
+      "cos_count": 0.3442673194069647,
+      "cos_abs": 0.3448401582548325
+    },
+    {
+      "offset": 4,
+      "row_coverage": 0.5127924857420216,
+      "cos_count": 0.3843477920061935,
+      "cos_abs": 0.3852744726479359
+    },
+    {
+      "offset": 5,
+      "row_coverage": 1.0,
+      "cos_count": 0.9488025184928863,
+      "cos_abs": 0.9652433439827603
+    },
+    {
+      "offset": 6,
+      "row_coverage": 0.5521369979371437,
+      "cos_count": 0.4211423761092716,
+      "cos_abs": 0.42391506414398233
+    },
+    {
+      "offset": 7,
+      "row_coverage": 0.4771837459046232,
+      "cos_count": 0.3454693974591135,
+      "cos_abs": 0.34685893215087193
+    },
+    {
+      "offset": 8,
+      "row_coverage": 0.490012058609392,
+      "cos_count": 0.34596092807020984,
+      "cos_abs": 0.3465103560753323
+    }
+  ],
+  "windows": [
+    {
+      "first": -1,
+      "last": 5,
+      "row_coverage": 1.0,
+      "cos_count": 0.8403022652098121,
+      "cos_abs": 0.8505407131497948
+    },
+    {
+      "first": 0,
+      "last": 5,
+      "row_coverage": 1.0,
+      "cos_count": 0.8509986192208687,
+      "cos_abs": 0.8621495506506889
+    },
+    {
+      "first": 0,
+      "last": 6,
+      "row_coverage": 1.0,
+      "cos_count": 0.8444949855096409,
+      "cos_abs": 0.8544447573538985
+    },
+    {
+      "first": 1,
+      "last": 5,
+      "row_coverage": 1.0,
+      "cos_count": 0.8650020284771806,
+      "cos_abs": 0.875942572848633
+    },
+    {
+      "first": 1,
+      "last": 6,
+      "row_coverage": 1.0,
+      "cos_count": 0.8558949698513485,
+      "cos_abs": 0.8656773101514826
+    },
+    {
+      "first": 1,
+      "last": 7,
+      "row_coverage": 1.0,
+      "cos_count": 0.847301482110919,
+      "cos_abs": 0.8557710499221078
+    },
+    {
+      "first": 2,
+      "last": 5,
+      "row_coverage": 1.0,
+      "cos_count": 0.8788200141263601,
+      "cos_abs": 0.8900543637305726
+    },
+    {
+      "first": 2,
+      "last": 6,
+      "row_coverage": 1.0,
+      "cos_count": 0.8672661842043926,
+      "cos_abs": 0.8772215446342454
+    },
+    {
+      "first": 2,
+      "last": 7,
+      "row_coverage": 1.0,
+      "cos_count": 0.8567545630113452,
+      "cos_abs": 0.8654710418564283
+    },
+    {
+      "first": 2,
+      "last": 8,
+      "row_coverage": 1.0,
+      "cos_count": 0.8457192688830469,
+      "cos_abs": 0.8532443458871605
+    },
+    {
+      "first": 3,
+      "last": 5,
+      "row_coverage": 1.0,
+      "cos_count": 0.8963916713343124,
+      "cos_abs": 0.9079783975890239
+    },
+    {
+      "first": 3,
+      "last": 6,
+      "row_coverage": 1.0,
+      "cos_count": 0.8815974625527572,
+      "cos_abs": 0.8918142350459769
+    },
+    {
+      "first": 3,
+      "last": 7,
+      "row_coverage": 1.0,
+      "cos_count": 0.8684367912700551,
+      "cos_abs": 0.877238473514194
+    },
+    {
+      "first": 3,
+      "last": 8,
+      "row_coverage": 1.0,
+      "cos_count": 0.8551460665343142,
+      "cos_abs": 0.8625892230069716
+    },
+    {
+      "first": 3,
+      "last": 9,
+      "row_coverage": 1.0,
+      "cos_count": 0.8431063462967996,
+      "cos_abs": 0.8516364302824154
+    },
+    {
+      "first": 4,
+      "last": 5,
+      "row_coverage": 1.0,
+      "cos_count": 0.9157111564588867,
+      "cos_abs": 0.9282678808942422
+    },
+    {
+      "first": 4,
+      "last": 6,
+      "row_coverage": 1.0,
+      "cos_count": 0.8956154219809545,
+      "cos_abs": 0.9067945555707265
+    },
+    {
+      "first": 4,
+      "last": 7,
+      "row_coverage": 1.0,
+      "cos_count": 0.8797113246422917,
+      "cos_abs": 0.889460268672568
+    },
+    {
+      "first": 4,
+      "last": 8,
+      "row_coverage": 1.0,
+      "cos_count": 0.8636124655925725,
+      "cos_abs": 0.8715845143810916
+    },
+    {
+      "first": 4,
+      "last": 9,
+      "row_coverage": 1.0,
+      "cos_count": 0.8492979052921557,
+      "cos_abs": 0.8584889121778267
+    },
+    {
+      "first": 4,
+      "last": 10,
+      "row_coverage": 1.0,
+      "cos_count": 0.8387888239980607,
+      "cos_abs": 0.8476469342348771
+    },
+    {
+      "first": 5,
+      "last": 5,
+      "row_coverage": 1.0,
+      "cos_count": 0.9488025184928863,
+      "cos_abs": 0.9652433439827603
+    },
+    {
+      "first": 5,
+      "last": 6,
+      "row_coverage": 1.0,
+      "cos_count": 0.9185697496138732,
+      "cos_abs": 0.9327642611911046
+    },
+    {
+      "first": 5,
+      "last": 7,
+      "row_coverage": 1.0,
+      "cos_count": 0.8963109854515316,
+      "cos_abs": 0.9087672777481547
+    },
+    {
+      "first": 5,
+      "last": 8,
+      "row_coverage": 1.0,
+      "cos_count": 0.875212364879667,
+      "cos_abs": 0.8853929668709639
+    },
+    {
+      "first": 5,
+      "last": 9,
+      "row_coverage": 1.0,
+      "cos_count": 0.8580456614265678,
+      "cos_abs": 0.8695986943428832
+    },
+    {
+      "first": 5,
+      "last": 10,
+      "row_coverage": 1.0,
+      "cos_count": 0.8452237327030024,
+      "cos_abs": 0.8563568323847195
+    },
+    {
+      "first": 5,
+      "last": 11,
+      "row_coverage": 1.0,
+      "cos_count": 0.835423189596647,
+      "cos_abs": 0.8456715108027021
+    }
+  ],
+  "summary": {
+    "by": "abs",
+    "peak_offset": 5,
+    "peak_cos": 0.9652433439827603,
+    "window": [
+      5,
+      5
+    ],
+    "window_cos": 0.9652433439827603,
+    "window_coverage": 1.0,
+    "availability_delay_units": 6.0,
+    "method": "window search (highest cosine among windows with full row coverage)",
+    "documented": [
+      0,
+      6
+    ],
+    "notes": [
+      "label window covers only part of the documented window (0, 6)",
+      "label(L) is complete only at L + 6 units; using it as an input before then is look-ahead"
+    ]
+  }
+}

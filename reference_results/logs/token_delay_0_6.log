@@ -1,0 +1,170 @@
+$ python scripts/run_heuristics.py --name tgbn-token --cutoff strict --weight abs --label_delays 0,avail --runs real --no_probe
+5397704it [00:33, 160484.75it/s]
+time order: 0 backward steps in the edge list (largest jump back 0)
+dataset tgbn-token: 72,936,998 events, C=1001, n_nodes=61,756, label times=784, P=86400, cutoff=strict, label_delay=0*P
+[real] channels: ['PF', 'EMA0.5', 'EMA0.7', 'EMA0.857143', 'EMA0.95', 'CNT', 'CUM', 'PCEMA0.5', 'PCEMA0.857143', 'DEC0.125P', 'DEC0.5P', 'DEC2P', 'DEC8P']  state memory ~3.71 GB
+[real] train pass done: 733 label times, 297s
+[real] val pass done: 29 label times, 30.7 candidate classes/node, 163s
+  Blend2 (no timing) best on val-sample: EMA0.857143+0.1*CUM  ndcg=0.4917
+  Blend3 (+timing) best on val-sample: EMA0.857143+0.1*CUM (+no DEC)  ndcg=0.4917
+  Fit-LabelOnly val-sample ndcg=0.4935
+  Fit-EdgeOnly  val-sample ndcg=0.4257
+  Fit-NoTime val-sample ndcg=0.4941
+  Fit-Time   val-sample ndcg=0.4942
+[real] selection done (29 val label times in sample), 50s
+[real] test pass done: 22 label times, 123s
+
+# heuristic audit: tgbn-token  cutoff=strict  label_delay=0*P  edge weight=abs
+
+- events 72,936,998, classes 1001, nodes 61,756
+- median label interval P = 86400 (time units of the dataset)
+- edge list time order: 0 backward steps, largest jump back 0
+- label times evaluated: val 29, test 22
+- edges processed after L_i but before predicting L_i (mean per label time): 0.0
+- max over label times of (latest processed edge time - L_i): -1  (negative = no edge at/after L_i was used)
+
+## Validation (full val, single channels)
+
+| channel | NDCG@10 |
+|---|---|
+| PF | 0.4026 |
+| EMA0.5 | 0.4846 |
+| EMA0.7 | 0.4906 |
+| EMA0.857143 | 0.4907 |
+| EMA0.95 | 0.4727 |
+| CNT | 0.2651 |
+| CUM | 0.4008 |
+| PCEMA0.5 | 0.4013 |
+| PCEMA0.857143 | 0.4106 |
+| DEC0.125P | 0.3784 |
+| DEC0.5P | 0.4034 |
+| DEC2P | 0.4132 |
+| DEC8P | 0.4230 |
+
+## Selected blends (chosen on a val sample)
+
+- [real] **Blend2**: EMA0.857143+0.1*CUM  (val-sample 0.4917)
+- [real] **Blend3**: EMA0.857143+0.1*CUM (+no DEC)  (val-sample 0.4917)
+- [real] **Fit-NoTime**: 0.094*PF + 0.077*EMA0.5 + 0.709*EMA0.857143 + 0.083*CUM + 0.038*PCEMA0.857143  (val-sample 0.4941)
+- [real] **Fit-Time**: 0.090*PF + 0.073*EMA0.5 + 0.048*EMA0.7 + 0.675*EMA0.857143 + 0.079*CUM + 0.036*PCEMA0.857143  (val-sample 0.4942)
+- [real] **Fit-LabelOnly**: 0.132*PF + 0.868*EMA0.857143  (val-sample 0.4935)
+- [real] **Fit-EdgeOnly**: 0.303*CUM + 0.332*PCEMA0.857143 + 0.365*DEC8P  (val-sample 0.4257)
+
+## Test NDCG@10 (mean over label times)
+
+| config | real |
+|---|---|
+| Fit-Time | 0.5133 |
+| Fit-NoTime | 0.5132 |
+| Blend3 | 0.5084 |
+| Blend2 | 0.5084 |
+| Fit-LabelOnly | 0.5127 |
+| Fit-EdgeOnly | 0.4470 |
+| PF | 0.4301 |
+| EMA0.5 | 0.5083 |
+| EMA0.7 | 0.5114 |
+| EMA0.857143 | 0.5085 |
+| EMA0.95 | 0.4863 |
+| CNT | 0.2977 |
+| CUM | 0.4140 |
+| PCEMA0.5 | 0.4225 |
+| PCEMA0.857143 | 0.4302 |
+| DEC0.125P | 0.4114 |
+| DEC0.5P | 0.4287 |
+| DEC2P | 0.4374 |
+| DEC8P | 0.4449 |
+
+## Paired comparisons over test label times
+
+- real: Fit-LabelOnly vs Fit-EdgeOnly: diff=+0.0657  95%CI=[+0.0610,+0.0707]  win=1.00  Wilcoxon p=4.77e-07  (n=22)
+- real: Fit-Time vs Fit-NoTime: diff=+0.0001  95%CI=[+0.0001,+0.0002]  win=0.77  Wilcoxon p=0.00528  (n=22)
+- real: Blend3 vs Blend2: diff=+0.0000  95%CI=[+0.0000,+0.0000]  win=0.00  Wilcoxon p=nan  (n=22)
+- real: best DEC single (DEC8P) vs best no-timing single (EMA0.857143): diff=-0.0635  95%CI=[-0.0674,-0.0598]  win=0.00  Wilcoxon p=4.77e-07  (n=22)
+dataset tgbn-token: 72,936,998 events, C=1001, n_nodes=61,756, label times=784, P=86400, cutoff=strict, label_delay=6*P
+[real] channels: ['PF', 'EMA0.5', 'EMA0.7', 'EMA0.857143', 'EMA0.95', 'CNT', 'CUM', 'PCEMA0.5', 'PCEMA0.857143', 'DEC0.125P', 'DEC0.5P', 'DEC2P', 'DEC8P']  state memory ~3.71 GB
+[real] train pass done: 733 label times, 281s
+[real] val pass done: 29 label times, 29.8 candidate classes/node, 160s
+  Blend2 (no timing) best on val-sample: EMA0.857143+0.35*CUM  ndcg=0.4317
+  Blend3 (+timing) best on val-sample: EMA0.857143+0.35*CUM +0.1*DEC8P  ndcg=0.4321
+  Fit-LabelOnly val-sample ndcg=0.4293
+  Fit-EdgeOnly  val-sample ndcg=0.4257
+  Fit-NoTime val-sample ndcg=0.4320
+  Fit-Time   val-sample ndcg=0.4321
+[real] selection done (29 val label times in sample), 38s
+[real] test pass done: 22 label times, 121s
+
+# heuristic audit: tgbn-token  cutoff=strict  label_delay=6*P  edge weight=abs
+
+- events 72,936,998, classes 1001, nodes 61,756
+- median label interval P = 86400 (time units of the dataset)
+- edge list time order: 0 backward steps, largest jump back 0
+- label times evaluated: val 29, test 22
+- edges processed after L_i but before predicting L_i (mean per label time): 0.0
+- max over label times of (latest processed edge time - L_i): -1  (negative = no edge at/after L_i was used)
+
+## Validation (full val, single channels)
+
+| channel | NDCG@10 |
+|---|---|
+| PF | 0.3313 |
+| EMA0.5 | 0.4158 |
+| EMA0.7 | 0.4248 |
+| EMA0.857143 | 0.4310 |
+| EMA0.95 | 0.4228 |
+| CNT | 0.2651 |
+| CUM | 0.4008 |
+| PCEMA0.5 | 0.4013 |
+| PCEMA0.857143 | 0.4106 |
+| DEC0.125P | 0.3784 |
+| DEC0.5P | 0.4034 |
+| DEC2P | 0.4132 |
+| DEC8P | 0.4230 |
+
+## Selected blends (chosen on a val sample)
+
+- [real] **Blend2**: EMA0.857143+0.35*CUM  (val-sample 0.4317)
+- [real] **Blend3**: EMA0.857143+0.35*CUM +0.1*DEC8P  (val-sample 0.4321)
+- [real] **Fit-NoTime**: 0.602*EMA0.857143 + 0.351*CUM + 0.048*PCEMA0.857143  (val-sample 0.4320)
+- [real] **Fit-Time**: 0.585*EMA0.857143 + 0.315*CUM + 0.100*DEC8P  (val-sample 0.4321)
+- [real] **Fit-LabelOnly**: 0.974*EMA0.857143 + 0.026*EMA0.95  (val-sample 0.4293)
+- [real] **Fit-EdgeOnly**: 0.303*CUM + 0.332*PCEMA0.857143 + 0.365*DEC8P  (val-sample 0.4257)
+
+## Test NDCG@10 (mean over label times)
+
+| config | real |
+|---|---|
+| Fit-Time | 0.4541 |
+| Fit-NoTime | 0.4528 |
+| Blend3 | 0.4541 |
+| Blend2 | 0.4528 |
+| Fit-LabelOnly | 0.4513 |
+| Fit-EdgeOnly | 0.4470 |
+| PF | 0.3625 |
+| EMA0.5 | 0.4401 |
+| EMA0.7 | 0.4470 |
+| EMA0.857143 | 0.4512 |
+| EMA0.95 | 0.4404 |
+| CNT | 0.2977 |
+| CUM | 0.4140 |
+| PCEMA0.5 | 0.4225 |
+| PCEMA0.857143 | 0.4302 |
+| DEC0.125P | 0.4114 |
+| DEC0.5P | 0.4287 |
+| DEC2P | 0.4374 |
+| DEC8P | 0.4449 |
+
+## Paired comparisons over test label times
+
+- real: Fit-LabelOnly vs Fit-EdgeOnly: diff=+0.0043  95%CI=[+0.0036,+0.0050]  win=1.00  Wilcoxon p=4.77e-07  (n=22)
+- real: Fit-Time vs Fit-NoTime: diff=+0.0013  95%CI=[+0.0010,+0.0016]  win=0.95  Wilcoxon p=1.43e-06  (n=22)
+- real: Blend3 vs Blend2: diff=+0.0013  95%CI=[+0.0010,+0.0015]  win=0.95  Wilcoxon p=1.43e-06  (n=22)
+- real: best DEC single (DEC8P) vs best no-timing single (EMA0.857143): diff=-0.0063  95%CI=[-0.0074,-0.0053]  win=0.00  Wilcoxon p=4.77e-07  (n=22)
+
+# label-delay sweep: tgbn-token  (delay in units of P = 86400)
+
+Test NDCG@10 (real run). A label revealed at L is usable only from L + delay.
+
+| cutoff | delay | PF | EMA0.857143 | EMA0.95 | Fit-LabelOnly | Fit-EdgeOnly | Fit-NoTime | Fit-Time | LabelOnly - EdgeOnly (95% CI) |
+|---|---|---|---|---|---|---|---|---|---|
+| strict | 0 | 0.4301 | 0.5085 | 0.4863 | 0.5127 | 0.4470 | 0.5132 | 0.5133 | +0.0657 [+0.0610,+0.0707] |
+| strict | 6 | 0.3625 | 0.4512 | 0.4404 | 0.4513 | 0.4470 | 0.4528 | 0.4541 | +0.0043 [+0.0036,+0.0050] |

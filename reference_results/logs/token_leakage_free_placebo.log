@@ -1,0 +1,128 @@
+$ python scripts\run_heuristics.py --name tgbn-token --cutoff strict --runs real,placebo --label_delays avail
+5397704it [00:26, 202543.05it/s]
+time order: 0 backward steps in the edge list (largest jump back 0)
+dataset tgbn-token: 72,936,998 events, C=1001, n_nodes=61,756, label times=784, P=86400, cutoff=strict, label_delay=6*P
+[real] channels: ['PF', 'EMA0.5', 'EMA0.7', 'EMA0.857143', 'EMA0.95', 'CNT', 'CUM', 'PCEMA0.5', 'PCEMA0.857143', 'DEC0.125P', 'DEC0.5P', 'DEC2P', 'DEC8P']  state memory ~3.71 GB
+[real] train pass done: 733 label times, 288s
+[real] val pass done: 29 label times, 29.8 candidate classes/node, 161s
+  Blend2 (no timing) best on val-sample: EMA0.857143+0.35*CUM  ndcg=0.4317
+  Blend3 (+timing) best on val-sample: EMA0.857143+0.35*CUM +0.1*DEC8P  ndcg=0.4321
+  Fit-LabelOnly val-sample ndcg=0.4293
+  Fit-EdgeOnly  val-sample ndcg=0.4257
+  Fit-NoTime val-sample ndcg=0.4320
+  Fit-Time   val-sample ndcg=0.4321
+[real] selection done (29 val label times in sample), 38s
+[real] test pass done: 22 label times, 122s
+[placebo] channels: ['PF', 'EMA0.5', 'EMA0.7', 'EMA0.857143', 'EMA0.95', 'CNT', 'CUM', 'PCEMA0.5', 'PCEMA0.857143', 'DEC0.125P', 'DEC0.5P', 'DEC2P', 'DEC8P']  state memory ~3.71 GB
+[placebo] train pass done: 733 label times, 279s
+[placebo] val pass done: 29 label times, 29.8 candidate classes/node, 161s
+  Blend2 (no timing) best on val-sample: EMA0.857143+0.35*CUM  ndcg=0.4317
+  Blend3 (+timing) best on val-sample: EMA0.857143+0.35*CUM +0.1*DEC8P  ndcg=0.4322
+  Fit-LabelOnly val-sample ndcg=0.4293
+  Fit-EdgeOnly  val-sample ndcg=0.4259
+  Fit-NoTime val-sample ndcg=0.4320
+  Fit-Time   val-sample ndcg=0.4324
+[placebo] selection done (29 val label times in sample), 48s
+[placebo] test pass done: 22 label times, 124s
+
+# heuristic audit: tgbn-token  cutoff=strict  label_delay=6*P  edge weight=abs
+
+- events 72,936,998, classes 1001, nodes 61,756
+- median label interval P = 86400 (time units of the dataset)
+- edge list time order: 0 backward steps, largest jump back 0
+- label times evaluated: val 29, test 22
+- edges processed after L_i but before predicting L_i (mean per label time): 0.0
+- max over label times of (latest processed edge time - L_i): -1  (negative = no edge at/after L_i was used)
+- TGB MovingAverage(window=7) = channel EMA0.857143
+
+## Validation (full val, single channels)
+
+| channel | NDCG@10 |
+|---|---|
+| PF | 0.3313 |
+| EMA0.5 | 0.4158 |
+| EMA0.7 | 0.4248 |
+| EMA0.857143 | 0.4310 |
+| EMA0.95 | 0.4228 |
+| CNT | 0.2651 |
+| CUM | 0.4008 |
+| PCEMA0.5 | 0.4013 |
+| PCEMA0.857143 | 0.4106 |
+| DEC0.125P | 0.3784 |
+| DEC0.5P | 0.4034 |
+| DEC2P | 0.4132 |
+| DEC8P | 0.4230 |
+
+## Selected blends (chosen on a val sample)
+
+- [real] **Blend2**: EMA0.857143+0.35*CUM  (val-sample 0.4317)
+- [real] **Blend3**: EMA0.857143+0.35*CUM +0.1*DEC8P  (val-sample 0.4321)
+- [real] **Fit-NoTime**: 0.602*EMA0.857143 + 0.351*CUM + 0.048*PCEMA0.857143  (val-sample 0.4320)
+- [real] **Fit-Time**: 0.585*EMA0.857143 + 0.315*CUM + 0.100*DEC8P  (val-sample 0.4321)
+- [real] **Fit-LabelOnly**: 0.974*EMA0.857143 + 0.026*EMA0.95  (val-sample 0.4293)
+- [real] **Fit-EdgeOnly**: 0.303*CUM + 0.332*PCEMA0.857143 + 0.365*DEC8P  (val-sample 0.4257)
+- [placebo] **Blend2**: EMA0.857143+0.35*CUM  (val-sample 0.4317)
+- [placebo] **Blend3**: EMA0.857143+0.35*CUM +0.1*DEC8P  (val-sample 0.4322)
+- [placebo] **Fit-NoTime**: 0.602*EMA0.857143 + 0.351*CUM + 0.048*PCEMA0.857143  (val-sample 0.4320)
+- [placebo] **Fit-Time**: 0.636*EMA0.857143 + 0.266*CUM + 0.048*PCEMA0.857143 + 0.050*DEC8P  (val-sample 0.4324)
+- [placebo] **Fit-LabelOnly**: 0.974*EMA0.857143 + 0.026*EMA0.95  (val-sample 0.4293)
+- [placebo] **Fit-EdgeOnly**: 0.292*CUM + 0.301*PCEMA0.857143 + 0.407*DEC8P  (val-sample 0.4259)
+
+## Test NDCG@10 (mean over label times)
+
+| config | real | placebo | real-placebo |
+|---|---|---|---|
+| Fit-Time | 0.4541 | 0.4540 | +0.0001 |
+| Fit-NoTime | 0.4528 | 0.4528 | +0.0000 |
+| Blend3 | 0.4541 | 0.4541 | -0.0000 |
+| Blend2 | 0.4528 | 0.4528 | +0.0000 |
+| Fit-LabelOnly | 0.4513 | 0.4513 | +0.0000 |
+| Fit-EdgeOnly | 0.4470 | 0.4474 | -0.0003 |
+| PF | 0.3625 | 0.3625 | +0.0000 |
+| EMA0.5 | 0.4401 | 0.4401 | +0.0000 |
+| EMA0.7 | 0.4470 | 0.4470 | +0.0000 |
+| EMA0.857143 | 0.4512 | 0.4512 | +0.0000 |
+| EMA0.95 | 0.4404 | 0.4404 | +0.0000 |
+| CNT | 0.2977 | 0.2977 | +0.0000 |
+| CUM | 0.4140 | 0.4140 | +0.0000 |
+| PCEMA0.5 | 0.4225 | 0.4225 | +0.0000 |
+| PCEMA0.857143 | 0.4302 | 0.4302 | +0.0000 |
+| DEC0.125P | 0.4114 | 0.4091 | +0.0024 |
+| DEC0.5P | 0.4287 | 0.4274 | +0.0013 |
+| DEC2P | 0.4374 | 0.4374 | -0.0000 |
+| DEC8P | 0.4449 | 0.4450 | -0.0001 |
+
+## Paired comparisons over test label times
+
+- real: Fit-LabelOnly vs Fit-EdgeOnly: diff=+0.0043  95%CI=[+0.0036,+0.0050]  win=1.00  Wilcoxon p=4.77e-07  (n=22)
+- real: Fit-Time vs Fit-NoTime: diff=+0.0013  95%CI=[+0.0010,+0.0016]  win=0.95  Wilcoxon p=1.43e-06  (n=22)
+- real: Blend3 vs Blend2: diff=+0.0013  95%CI=[+0.0010,+0.0015]  win=0.95  Wilcoxon p=1.43e-06  (n=22)
+- real: best DEC single (DEC8P) vs best no-timing single (EMA0.857143): diff=-0.0063  95%CI=[-0.0074,-0.0053]  win=0.00  Wilcoxon p=4.77e-07  (n=22)
+- placebo: Fit-Time vs Fit-NoTime: diff=+0.0012  95%CI=[+0.0010,+0.0014]  win=1.00  Wilcoxon p=4.77e-07  (n=22)
+- Fit-Time: real vs placebo: diff=+0.0001  95%CI=[-0.0001,+0.0003]  win=0.55  Wilcoxon p=0.388  (n=22)
+- Fit-NoTime: real vs placebo (sanity, should be ~0): diff=+0.0000  95%CI=[+0.0000,+0.0000]  win=0.00  Wilcoxon p=nan  (n=22)
+- timing gain: real minus placebo (difference-in-differences): diff=+0.0001  95%CI=[-0.0001,+0.0003]  win=0.55  Wilcoxon p=0.388  (n=22)
+
+## Label-window probe (cosine between label at L and edges in [L+a*u, L+(a+1)*u))
+
+unit u = 86400
+
+| a | row_coverage | cos_one | cos_abs |
+|---|---|---|---|
+| -8 | 0.408 | 0.272 | 0.272 |
+| -7 | 0.383 | 0.255 | 0.255 |
+| -6 | 0.377 | 0.260 | 0.261 |
+| -5 | 0.385 | 0.272 | 0.272 |
+| -4 | 0.380 | 0.251 | 0.252 |
+| -3 | 0.404 | 0.276 | 0.276 |
+| -2 | 0.461 | 0.327 | 0.327 |
+| -1 | 0.474 | 0.335 | 0.336 |
+| 0 | 0.453 | 0.313 | 0.313 |
+| 1 | 0.457 | 0.329 | 0.331 |
+| 2 | 0.451 | 0.327 | 0.327 |
+| 3 | 0.464 | 0.344 | 0.345 |
+| 4 | 0.513 | 0.384 | 0.385 |
+| 5 | 1.000 | 0.949 | 0.965 |
+| 6 | 0.552 | 0.421 | 0.424 |
+| 7 | 0.477 | 0.345 | 0.347 |
+| 8 | 0.490 | 0.346 | 0.347 |
